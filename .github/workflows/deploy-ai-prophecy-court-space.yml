@@ -1,0 +1,36 @@
+name: Deploy AI Prophecy Court Space
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "projects/ai-prophecy-court/space/**"
+      - ".github/workflows/deploy-ai-prophecy-court-space.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ai-prophecy-court-space
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Create Space subtree
+        run: git subtree split --prefix=projects/ai-prophecy-court/space --branch hf-space-sync
+
+      - name: Push to Hugging Face Space
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          test -n "$HF_TOKEN"
+          git push --force \
+            "https://oauth2:${HF_TOKEN}@huggingface.co/spaces/build-small-hackathon/ai-prophecy-court" \
+            hf-space-sync:main

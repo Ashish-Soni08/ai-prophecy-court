@@ -2,6 +2,10 @@
 
 This repository contains two separate projects:
 
+[AI Prophecy Court on Hugging Face](https://huggingface.co/spaces/build-small-hackathon/ai-prophecy-court)
+·
+[Normalized presence dataset](https://huggingface.co/datasets/build-small-hackathon/ai-prophecy-court-presence)
+
 ## AI Prophecy Court
 
 Location: `projects/ai-prophecy-court/`
@@ -13,7 +17,7 @@ from Git.
 
 ```powershell
 cd projects\ai-prophecy-court
-uv sync --extra dev --extra browser
+uv sync --extra dev --extra browser --extra space
 uv run python -m pytest
 ```
 

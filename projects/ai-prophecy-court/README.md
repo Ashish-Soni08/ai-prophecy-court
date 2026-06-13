@@ -9,6 +9,10 @@ activity used by AI Prophecy Court.
 - X: 1,066 accessible profile-timeline records from six verified profiles
 - Public dataset:
   `build-small-hackathon/ai-prophecy-court-presence`
+- Live Space:
+  `build-small-hackathon/ai-prophecy-court`
+- Source:
+  `Ashish-Soni08/ai-prophecy-court`
 
 The exact successful raw envelopes and run manifests remain local under
 `raw/browser-use/`. Browser profiles, cookies, failed runs, smoke tests, and
@@ -17,9 +21,17 @@ legacy mixed archives are intentionally excluded.
 ## Setup
 
 ```powershell
-uv sync --extra dev --extra browser
+uv sync --extra dev --extra browser --extra space
 $env:HF_TOKEN = "..."
 ```
+
+## Deployment
+
+The GitHub repository is the canonical source. Changes under `space/` are
+deployed to the Hugging Face Space by
+`.github/workflows/deploy-ai-prophecy-court-space.yml`. The workflow uses a
+repository secret named `HF_TOKEN` and preserves the Space subtree's Git
+history, including Codex co-author trailers.
 
 Create a local authenticated browser profile only when another collection is
 needed:
