@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Case Lobby · AI Prophecy Court</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js" defer></script>
+</head>
+<body>
+  <header class="shell masthead">
+    <a class="brand" href="index.html"><img src="assets/court-seal.png" alt=""><strong>AI Prophecy Court</strong></a>
+    <div class="edition">Docket no. 47 · Sunday session</div>
+    <div class="live-mark">Evidence intake live</div>
+  </header>
+  <nav class="shell nav-strip" aria-label="Court sections">
+    <a href="case-lobby.html" aria-current="page">Case lobby</a>
+    <a href="trial-chamber.html">Trial chamber</a>
+    <a href="verdict-archive.html">Verdict archive</a>
+  </nav>
+  <main class="shell main">
+    <div class="lobby-hero">
+      <article class="paper claim-sheet">
+        <div>
+          <div class="eyebrow">Featured claim · awaiting trial</div>
+          <h1>“AI agents will perform <mark>most knowledge work</mark> before the decade closes.”</h1>
+          <p class="lede">Composite demo claim assembled from public AI timeline discourse. The court will test scope, confidence, and the moving definition of “most.”</p>
+        </div>
+        <div class="claim-footer">
+          <div>
+            <span class="stamp demo">Composite demo claim</span>
+            <p class="meta">The People v. The Accelerated Timeline · Case 0047</p>
+          </div>
+          <img src="assets/court-seal.png" alt="AI Prophecy Court seal">
+        </div>
+      </article>
+      <aside class="session-rail">
+        <div>
+          <div class="eyebrow" style="color:var(--gold)">Court convenes in</div>
+          <div class="countdown">03:00</div>
+          <div class="rail-list">
+            <div class="rail-row"><span>Verified sources</span><strong>6</strong></div>
+            <div class="rail-row"><span>Demo exhibits</span><strong>2</strong></div>
+            <div class="rail-row"><span>Contradiction leads</span><strong>4</strong></div>
+            <div class="rail-row"><span>Future witnesses</span><strong>1</strong></div>
+          </div>
+        </div>
+        <a class="button" href="trial-chamber.html"><i data-lucide="gavel"></i>Convene the Court</a>
+      </aside>
+    </div>
+
+    <section class="section">
+      <div class="rule-title"><div><div class="eyebrow">Indexed defendants</div><h2>Choose a docket</h2></div><div class="meta">8 organizations · 27 claims</div></div>
+      <div class="filters" data-filter-group>
+        <button class="filter-btn active" data-filter="all">All chambers</button>
+        <button class="filter-btn" data-filter="openai">OpenAI</button>
+        <button class="filter-btn" data-filter="anthropic">Anthropic</button>
+        <button class="filter-btn" data-filter="google">Google</button>
+        <button class="filter-btn" data-filter="meta">Meta</button>
+        <button class="filter-btn" data-filter="microsoft">Microsoft</button>
+        <button class="filter-btn" data-filter="other">HF · Cohere · Perplexity</button>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="rule-title"><div><div class="eyebrow">Freshly entered</div><h2>Recent evidence</h2></div><span class="stamp verified">Links preserved</span></div>
+      <div class="evidence-grid">
+        <article class="paper evidence-card" data-company="openai">
+          <img src="assets/evidence-x-post.png" alt="Archival exhibit representing a public post">
+          <div class="evidence-body"><span class="stamp verified">Verified source</span><h3>The Intelligence Age</h3><p>Sam Altman argues that superintelligence may arrive within “a few thousand days.” The court flags the deliberately elastic clock.</p><a class="source-link" href="https://ia.samaltman.com/" target="_blank" rel="noreferrer">OPEN SOURCE ↗ ia.samaltman.com</a></div>
+        </article>
+        <article class="paper evidence-card" data-company="anthropic">
+          <img src="assets/evidence-video-transcript.png" alt="Archival exhibit representing a video transcript">
+          <div class="evidence-body"><span class="stamp verified">Verified source</span><h3>Machines of Loving Grace</h3><p>Dario Amodei sketches a compressed century of biological and economic progress. Scope and time compression enter the record.</p><a class="source-link" href="https://www.darioamodei.com/essay/machines-of-loving-grace" target="_blank" rel="noreferrer">OPEN SOURCE ↗ darioamodei.com</a></div>
+        </article>
+        <article class="paper evidence-card" data-company="google">
+          <img src="assets/evidence-video-transcript.png" alt="Archival exhibit representing an interview transcript">
+          <div class="evidence-body"><span class="stamp demo">Demo filing</span><h3>The five-to-ten-year window</h3><p>A clearly labeled demo excerpt models how the court aligns a public prediction with later deployment evidence.</p><a class="source-link" href="https://x.com/sundarpichai" target="_blank" rel="noreferrer">SOURCE PROFILE ↗ Sundar Pichai</a></div>
+        </article>
+        <article class="paper evidence-card" data-company="meta">
+          <img src="assets/evidence-x-post.png" alt="Archival exhibit representing a public post">
+          <div class="evidence-body"><span class="stamp verified">Verified source</span><h3>Against the hype curve</h3><p>Public skepticism about present systems becomes defense evidence: not every prediction in this court points toward acceleration.</p><a class="source-link" href="https://x.com/ylecun" target="_blank" rel="noreferrer">SOURCE PROFILE ↗ x.com/ylecun</a></div>
+        </article>
+        <article class="paper evidence-card" data-company="microsoft">
+          <img src="assets/evidence-video-transcript.png" alt="Archival exhibit representing a keynote transcript">
+          <div class="evidence-body"><span class="stamp demo">Demo excerpt</span><h3>Copilot becomes the interface</h3><p>A demo exhibit tests whether product language describes a shipped behavior, a strategic direction, or ceremonial optimism.</p><a class="source-link" href="https://x.com/satyanadella" target="_blank" rel="noreferrer">SOURCE PROFILE ↗ Satya Nadella</a></div>
+        </article>
+        <article class="paper evidence-card" data-company="other">
+          <img src="assets/evidence-x-post.png" alt="Archival exhibit representing a public post">
+          <div class="evidence-body"><span class="stamp demo">Demo bundle</span><h3>Open models take the stand</h3><p>Hugging Face, Cohere, and Perplexity claims are grouped for a future trial on openness, retrieval, and the meaning of “answer engine.”</p><a class="source-link" href="https://x.com/huggingface" target="_blank" rel="noreferrer">SOURCE PROFILE ↗ x.com/huggingface</a></div>
+        </article>
+      </div>
+    </section>
+    <img class="ornament" src="assets/fungal-border.png" alt="">
+  </main>
+  <div class="toast" data-toast role="status"></div>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://huggingface.co/datasets/build-small-hackathon/ai-prophecy-court-presence/normalized-content.schema.json",
+  "title": "AI Prophecy Court Normalized Content",
+  "type": "object",
+  "required": [
+    "content_id",
+    "person_id",
+    "platform",
+    "canonical_url",
+    "run_id",
+    "collection_id",
+    "raw_payload_sha256"
+  ],
+  "properties": {
+    "content_id": {"type": "string"},
+    "person_id": {"type": "string"},
+    "platform": {"enum": ["x", "linkedin"]},
+    "native_id": {"type": "string"},
+    "canonical_url": {"type": "string"},
+    "content_type": {"type": ["string", "null"]},
+    "text": {"type": ["string", "null"]},
+    "text_html": {"type": ["string", "null"]},
+    "title": {"type": ["string", "null"]},
+    "published_at": {"type": ["string", "null"]},
+    "media_json": {"type": "string"},
+    "engagement_json": {"type": "string"},
+    "extracted_at": {"type": ["string", "null"]},
+    "run_id": {"type": "string"},
+    "collection_id": {"type": "string"},
+    "raw_payload_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,85 @@
+schema_version: 1
+collection:
+  start_date: "2022-11-30"
+  end_date: "2026-06-13"
+  method: browser-use-deterministic-cdp
+  linkedin_original_posts_only: true
+  x_accessible_profile_timeline: true
+
+hugging_face:
+  organization: build-small-hackathon
+  public_repo: build-small-hackathon/ai-prophecy-court-presence
+
+people:
+  - id: jensen-huang
+    name: Jensen Huang
+    company: NVIDIA
+    accounts:
+      x:
+        status: no_account_found
+      linkedin:
+        status: verified_active
+        url: https://www.linkedin.com/in/jenhsunhuang/
+
+  - id: sam-altman
+    name: Sam Altman
+    company: OpenAI
+    accounts:
+      x:
+        status: verified_active
+        url: https://x.com/sama
+      linkedin:
+        status: no_account_found
+
+  - id: dario-amodei
+    name: Dario Amodei
+    company: Anthropic
+    accounts:
+      x:
+        status: verified_active
+        url: https://x.com/DarioAmodei
+      linkedin:
+        status: no_account_found
+
+  - id: sundar-pichai
+    name: Sundar Pichai
+    company: Google
+    accounts:
+      x:
+        status: verified_active
+        url: https://x.com/sundarpichai
+      linkedin:
+        status: verified_active
+        url: https://www.linkedin.com/in/sundarpichai/
+
+  - id: clement-delangue
+    name: Clement Delangue
+    company: Hugging Face
+    accounts:
+      x:
+        status: verified_active
+        url: https://x.com/ClementDelangue
+      linkedin:
+        status: verified_active
+        url: https://www.linkedin.com/in/clementdelangue/
+
+  - id: satya-nadella
+    name: Satya Nadella
+    company: Microsoft
+    accounts:
+      x:
+        status: verified_active
+        url: https://x.com/satyanadella
+      linkedin:
+        status: verified_active
+        url: https://www.linkedin.com/in/satyanadella/
+
+  - id: elon-musk
+    name: Elon Musk
+    company: xAI
+    accounts:
+      x:
+        status: verified_active
+        url: https://x.com/elonmusk
+      linkedin:
+        status: no_account_found

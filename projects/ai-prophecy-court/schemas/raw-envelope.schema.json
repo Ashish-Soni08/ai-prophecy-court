@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:ai-prophecy-court:schema:raw-envelope",
+  "title": "AI Prophecy Court Raw Envelope",
+  "type": "object",
+  "required": [
+    "run_id",
+    "platform",
+    "person_id",
+    "input_url",
+    "requested_at",
+    "completed_at",
+    "collector_id",
+    "collection_id",
+    "collection_method",
+    "pipeline_version",
+    "payload_sha256",
+    "payload"
+  ],
+  "properties": {
+    "run_id": {"type": "string"},
+    "platform": {"enum": ["x", "linkedin"]},
+    "person_id": {"type": "string"},
+    "input_url": {"type": "string", "format": "uri"},
+    "requested_at": {"type": "string", "format": "date-time"},
+    "completed_at": {"type": "string", "format": "date-time"},
+    "source_extracted_at": {
+      "type": ["string", "null"],
+      "format": "date-time"
+    },
+    "collector_id": {"type": "string"},
+    "collection_id": {"type": "string"},
+    "collection_method": {
+      "const": "browser-use"
+    },
+    "pipeline_version": {"type": "string"},
+    "payload_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "payload": {"type": "object"}
+  },
+  "additionalProperties": false
+}

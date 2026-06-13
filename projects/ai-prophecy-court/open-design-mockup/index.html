@@ -1,0 +1,857 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="AI Prophecy Court live roast floor for public AI predictions and cited evidence.">
+  <title>AI Prophecy Court | Live Roast Floor</title>
+  <style>
+    :root {
+      --bg: oklch(94% 0.025 88);
+      --surface: oklch(98% 0.012 88);
+      --fg: oklch(18% 0.018 70);
+      --muted: oklch(43% 0.018 72);
+      --border: oklch(75% 0.035 82);
+      --accent: oklch(72% 0.18 118);
+      --gold: oklch(62% 0.09 82);
+      --danger: oklch(50% 0.12 28);
+      --font-display: "Iowan Old Style", "Charter", Georgia, serif;
+      --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+      --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+      --page: min(1560px, calc(100vw - 48px));
+      --rule: 1px solid color-mix(in oklch, var(--fg) 32%, transparent);
+    }
+
+    * { box-sizing: border-box; }
+    html { color-scheme: light; scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-width: 320px;
+      overflow-x: clip;
+      color: var(--fg);
+      background-color: var(--bg);
+      background-image:
+        radial-gradient(circle at 14% 8%, color-mix(in oklch, var(--gold) 8%, transparent), transparent 24rem),
+        repeating-linear-gradient(93deg, transparent 0 37px, color-mix(in oklch, var(--border) 10%, transparent) 38px),
+        repeating-linear-gradient(2deg, transparent 0 8px, color-mix(in oklch, var(--fg) 2.5%, transparent) 9px);
+      font-family: var(--font-body);
+      line-height: 1.45;
+    }
+    button, input, select { font: inherit; }
+    button, a, select, input { -webkit-tap-highlight-color: transparent; }
+    button { color: inherit; }
+    a { color: inherit; }
+    :focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+    [hidden] { display: none !important; }
+
+    .page { width: var(--page); margin-inline: auto; }
+    .eyebrow, .meta, .tag, .status, .filter-label, .stage-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .075em;
+      text-transform: uppercase;
+    }
+    .muted { color: var(--muted); }
+
+    .masthead {
+      padding: 18px 0 12px;
+      border-bottom: 3px double var(--fg);
+    }
+    .masthead-top, .masthead-main, .masthead-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+    .masthead-top {
+      padding-bottom: 10px;
+      border-bottom: var(--rule);
+    }
+    .court-live { display: inline-flex; align-items: center; gap: 8px; }
+    .live-mark {
+      width: 9px;
+      height: 9px;
+      background: var(--accent);
+      border: 1px solid var(--fg);
+      border-radius: 50%;
+      box-shadow: 0 0 0 4px color-mix(in oklch, var(--accent) 18%, transparent);
+      animation: pulse 2.2s ease-in-out infinite;
+    }
+    .masthead-main { padding: 14px 0 10px; }
+    .brand { display: flex; align-items: center; gap: 16px; min-width: 0; }
+    .seal {
+      width: 72px;
+      aspect-ratio: 1;
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+      border: 1px solid var(--gold);
+      border-radius: 50%;
+      position: relative;
+      font: 800 15px/1 var(--font-display);
+      letter-spacing: .08em;
+    }
+    .seal::before {
+      content: "";
+      position: absolute;
+      inset: 6px;
+      border: 1px solid var(--fg);
+      border-radius: 50%;
+    }
+    .seal::after {
+      content: "";
+      position: absolute;
+      inset: 15px 10px;
+      border-top: 1px solid var(--fg);
+      border-bottom: 1px solid var(--fg);
+      transform: rotate(-22deg);
+    }
+    .brand h1 {
+      margin: 0;
+      font-family: var(--font-display);
+      font-size: clamp(35px, 4.8vw, 68px);
+      line-height: .88;
+      letter-spacing: -.035em;
+      text-wrap: balance;
+    }
+    .brand p { margin: 5px 0 0; color: var(--muted); font-family: var(--font-display); font-style: italic; }
+    .masthead-nav { justify-content: flex-end; flex-wrap: wrap; }
+    .nav-link, .text-button {
+      border: 0;
+      background: transparent;
+      padding: 8px 2px;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      text-decoration: none;
+      font-weight: 700;
+      border-bottom: 1px solid currentColor;
+      cursor: pointer;
+    }
+    .search-wrap { position: relative; min-width: min(310px, 42vw); }
+    .search-wrap input {
+      width: 100%;
+      min-height: 44px;
+      border: 0;
+      border-bottom: 1px solid var(--fg);
+      background: transparent;
+      color: var(--fg);
+      padding: 8px 38px 8px 0;
+    }
+    .search-wrap input::placeholder { color: var(--muted); }
+    .search-wrap span { position: absolute; right: 0; top: 13px; font-family: var(--font-mono); font-size: 10px; }
+
+    .court-pulse {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: auto minmax(220px, .72fr) 1.3fr;
+      background: var(--fg);
+      color: var(--surface);
+      border: 1px solid var(--fg);
+      min-height: 78px;
+    }
+    .pulse-title { padding: 15px 18px; border-right: 1px solid color-mix(in oklch, var(--surface) 28%, transparent); }
+    .pulse-title strong { display: block; font-family: var(--font-display); font-size: 21px; }
+    .pulse-stages { display: grid; grid-template-columns: repeat(4, 1fr); }
+    .stage {
+      border: 0;
+      border-right: 1px solid color-mix(in oklch, var(--surface) 22%, transparent);
+      background: transparent;
+      color: inherit;
+      min-height: 76px;
+      padding: 10px;
+      cursor: pointer;
+      opacity: .48;
+    }
+    .stage.active { color: var(--accent); opacity: 1; background: color-mix(in oklch, var(--accent) 8%, transparent); }
+    .stage-index { display: block; font-family: var(--font-display); font-size: 22px; }
+    .pulse-output { padding: 15px 20px; display: flex; align-items: center; font-family: var(--font-mono); font-size: 12px; }
+    .cursor::after { content: ""; display: inline-block; width: 7px; height: 1em; margin-left: 5px; background: var(--accent); vertical-align: -.18em; animation: blink 1s steps(1) infinite; }
+
+    .main-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 8fr) minmax(270px, 4fr);
+      gap: 24px;
+      padding: 24px 0 12px;
+      align-items: stretch;
+    }
+    .featured {
+      position: relative;
+      background: color-mix(in oklch, var(--surface) 88%, transparent);
+      border: 1px solid var(--fg);
+      padding: clamp(24px, 4vw, 54px);
+      min-height: 570px;
+      overflow: hidden;
+    }
+    .featured::after {
+      content: "";
+      position: absolute;
+      left: 5%;
+      right: 5%;
+      bottom: -16px;
+      height: 95px;
+      background:
+        radial-gradient(ellipse at 8% 72%, transparent 0 8px, var(--fg) 9px 10px, transparent 11px),
+        radial-gradient(ellipse at 18% 55%, var(--accent) 0 3px, transparent 4px),
+        radial-gradient(ellipse at 31% 70%, transparent 0 12px, var(--fg) 13px 14px, transparent 15px),
+        radial-gradient(ellipse at 48% 58%, var(--accent) 0 4px, transparent 5px),
+        radial-gradient(ellipse at 64% 73%, transparent 0 10px, var(--fg) 11px 12px, transparent 13px),
+        radial-gradient(ellipse at 79% 56%, var(--accent) 0 3px, transparent 4px),
+        radial-gradient(ellipse at 92% 70%, transparent 0 9px, var(--fg) 10px 11px, transparent 12px),
+        linear-gradient(172deg, transparent 47%, var(--fg) 48% 49%, transparent 50%);
+      opacity: .46;
+      pointer-events: none;
+    }
+    .featured-kicker { display: flex; justify-content: space-between; gap: 18px; border-bottom: var(--rule); padding-bottom: 10px; }
+    .featured h2 {
+      max-width: 900px;
+      margin: 30px 0 20px;
+      font-family: var(--font-display);
+      font-size: clamp(40px, 5.1vw, 78px);
+      line-height: .99;
+      letter-spacing: -.035em;
+      text-wrap: balance;
+    }
+    .featured h2::before { content: "“"; color: var(--gold); margin-left: -.48em; }
+    .featured h2::after { content: "”"; color: var(--gold); }
+    .case-meta { display: flex; flex-wrap: wrap; gap: 8px 18px; padding: 12px 0 18px; border-bottom: var(--rule); }
+    .tag { display: inline-flex; align-items: center; gap: 6px; }
+    .tag.verified::before { content: ""; width: 7px; height: 7px; background: var(--accent); border-radius: 50%; }
+    .confidence { display: grid; grid-template-columns: auto 1fr auto; gap: 14px; align-items: center; margin: 18px 0; }
+    .confidence-rule { height: 2px; background: linear-gradient(90deg, var(--accent) 82%, var(--border) 82%); }
+    .exchange { display: grid; gap: 8px; margin: 18px 0 24px; }
+    .exchange-line { display: grid; grid-template-columns: 138px 1fr; gap: 16px; padding-top: 8px; border-top: var(--rule); }
+    .speaker { font-family: var(--font-display); font-weight: 700; }
+    .featured-actions { display: flex; gap: 10px; flex-wrap: wrap; position: relative; z-index: 1; }
+    .button {
+      min-height: 46px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border: 1px solid var(--fg);
+      border-radius: 2px;
+      background: transparent;
+      padding: 11px 16px;
+      font-weight: 800;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: transform 140ms ease, background 140ms ease;
+    }
+    .button:hover { background: color-mix(in oklch, var(--accent) 15%, transparent); }
+    .button:active { transform: translateY(1px); }
+    .button.primary { background: var(--accent); color: var(--fg); box-shadow: 4px 4px 0 var(--fg); }
+    .button.primary:hover { background: color-mix(in oklch, var(--accent) 84%, var(--surface)); }
+    .button:disabled { cursor: not-allowed; opacity: .62; box-shadow: none; }
+
+    .evidence-brief {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      border: 1px solid var(--fg);
+      background:
+        linear-gradient(118deg, color-mix(in oklch, var(--gold) 9%, transparent), transparent 42%),
+        repeating-linear-gradient(0deg, transparent 0 30px, color-mix(in oklch, var(--border) 22%, transparent) 31px),
+        var(--surface);
+      min-height: 570px;
+      position: relative;
+    }
+    .evidence-brief::before {
+      content: "EXHIBIT A · SOURCE AND CONTEXT";
+      position: absolute;
+      top: 22px;
+      left: 22px;
+      right: 22px;
+      padding: 12px 0;
+      border-top: 3px double var(--fg);
+      border-bottom: 1px solid var(--fg);
+      font: 800 11px/1 var(--font-mono);
+      letter-spacing: .08em;
+    }
+    .brief-copy { padding: 22px; display: flex; flex-direction: column; justify-content: space-between; }
+    .brief-copy h3 { font-family: var(--font-display); font-size: 30px; line-height: 1; margin: 10px 0 12px; }
+    .brief-copy p { margin: 0 0 14px; color: var(--muted); }
+    .citation { overflow-wrap: anywhere; font-family: var(--font-mono); font-size: 11px; }
+
+    .filter-bar {
+      margin: 20px 0 0;
+      border-top: 3px double var(--fg);
+      border-bottom: 1px solid var(--fg);
+      padding: 14px 0;
+      display: grid;
+      grid-template-columns: repeat(5, minmax(130px, 1fr)) auto;
+      gap: 10px;
+      align-items: end;
+    }
+    .filter-group { min-width: 0; }
+    .filter-label { display: block; margin-bottom: 5px; }
+    select {
+      width: 100%;
+      min-height: 42px;
+      border: 1px solid var(--fg);
+      border-radius: 0;
+      background: color-mix(in oklch, var(--surface) 68%, transparent);
+      padding: 7px 28px 7px 9px;
+      color: var(--fg);
+    }
+    .mobile-filter-button { display: none; }
+
+    .docket-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 300px;
+      gap: 26px;
+      padding: 22px 0 60px;
+      align-items: start;
+    }
+    .section-head { display: flex; align-items: end; justify-content: space-between; gap: 20px; padding-bottom: 11px; border-bottom: 3px double var(--fg); }
+    .section-head h2 { margin: 0; font-family: var(--font-display); font-size: clamp(34px, 4vw, 54px); line-height: 1; }
+    .register { border-bottom: 1px solid var(--fg); }
+    .filing {
+      position: relative;
+      display: grid;
+      grid-template-columns: 170px minmax(220px, 1.35fr) minmax(190px, .9fr) 158px;
+      gap: 18px;
+      padding: 20px 10px 20px 0;
+      border-top: 1px solid color-mix(in oklch, var(--fg) 45%, transparent);
+      transition: background 180ms ease, padding 180ms ease;
+    }
+    .filing:first-child { border-top: 0; }
+    .filing.selected { background: color-mix(in oklch, var(--accent) 10%, transparent); padding-left: 14px; box-shadow: inset 4px 0 0 var(--accent); }
+    .filing.new { animation: newFiling 2.8s ease both; }
+    .filing h3 { font-family: var(--font-display); font-size: 24px; line-height: 1.08; margin: 0 0 7px; }
+    .claim { margin: 0; font-family: var(--font-display); font-size: 20px; line-height: 1.28; }
+    .reaction { margin: 0; font-size: 14px; color: var(--muted); }
+    .filing-actions { display: flex; flex-direction: column; gap: 7px; align-items: stretch; }
+    .filing-actions .button { min-height: 40px; padding: 8px 10px; font-size: 13px; }
+    .new-stamp { display: inline-block; color: var(--fg); background: var(--accent); padding: 3px 6px; margin-bottom: 7px; transform: rotate(-1.5deg); }
+    .source-line { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+    .status-ok { color: color-mix(in oklch, var(--accent) 64%, var(--fg)); }
+    .status-demo { color: var(--gold); }
+
+    .accused { position: sticky; top: 14px; border: 1px solid var(--fg); background: color-mix(in oklch, var(--surface) 70%, transparent); }
+    .accused header { padding: 18px; border-bottom: 3px double var(--fg); }
+    .accused h2 { font-family: var(--font-display); font-size: 34px; margin: 0; }
+    .person {
+      width: 100%;
+      border-bottom: 1px solid color-mix(in oklch, var(--fg) 35%, transparent);
+      background: transparent;
+      text-align: left;
+      padding: 0;
+    }
+    .person-select {
+      width: 100%;
+      border: 0;
+      background: transparent;
+      text-align: left;
+      padding: 14px 16px 8px;
+      cursor: pointer;
+    }
+    .person:hover, .person.active { background: color-mix(in oklch, var(--accent) 12%, transparent); }
+    .person strong { display: block; font-family: var(--font-display); font-size: 19px; }
+    .person-detail { display: flex; justify-content: space-between; gap: 8px; margin-top: 4px; color: var(--muted); font-size: 12px; }
+    .dossier-link { display: inline-block; margin: 0 16px 12px; font-size: 12px; font-weight: 800; }
+
+    .state-panel { padding: 56px 20px; text-align: center; border-bottom: 1px solid var(--fg); }
+    .state-panel h3 { margin: 0 0 8px; font-family: var(--font-display); font-size: 34px; }
+    .skeleton { overflow: hidden; position: relative; background: color-mix(in oklch, var(--border) 55%, transparent); }
+    .skeleton::after { content: ""; position: absolute; inset: 0; transform: translateX(-100%); background: linear-gradient(90deg, transparent, color-mix(in oklch, var(--surface) 65%, transparent), transparent); animation: shimmer 1.2s infinite; }
+    .skeleton-line { height: 14px; margin: 9px 0; }
+    .skeleton-line.big { height: 40px; width: 82%; }
+
+    .drawer-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 20;
+      background: rgb(18 16 12 / .48);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 180ms ease;
+    }
+    .drawer-backdrop.open { opacity: 1; pointer-events: auto; }
+    .drawer {
+      position: fixed;
+      z-index: 21;
+      top: 0;
+      right: 0;
+      width: min(520px, 94vw);
+      height: 100dvh;
+      overflow-y: auto;
+      background-color: var(--surface);
+      background-image:
+        radial-gradient(circle at 92% 5%, color-mix(in oklch, var(--gold) 8%, transparent), transparent 18rem),
+        repeating-linear-gradient(2deg, transparent 0 8px, color-mix(in oklch, var(--fg) 2.5%, transparent) 9px);
+      border-left: 1px solid var(--fg);
+      transform: translateX(102%);
+      transition: transform 220ms ease;
+      padding: 24px;
+    }
+    .drawer.open { transform: translateX(0); }
+    .drawer-head { display: flex; justify-content: space-between; gap: 18px; align-items: start; padding-bottom: 16px; border-bottom: 3px double var(--fg); }
+    .drawer h2 { margin: 6px 0 0; font-family: var(--font-display); font-size: 42px; line-height: 1; }
+    .icon-button { width: 44px; height: 44px; border: 1px solid var(--fg); background: transparent; cursor: pointer; font-size: 22px; }
+    .evidence-block { border-top: 1px solid var(--fg); padding: 17px 0; }
+    .evidence-block h3 { font-family: var(--font-display); font-size: 24px; margin: 0 0 8px; }
+    .evidence-block p { margin: 0; }
+
+    .toast {
+      position: fixed;
+      z-index: 30;
+      left: 50%;
+      bottom: 22px;
+      transform: translate(-50%, 30px);
+      opacity: 0;
+      width: min(560px, calc(100vw - 28px));
+      background: var(--fg);
+      color: var(--surface);
+      border: 1px solid var(--accent);
+      padding: 14px 18px;
+      font-weight: 700;
+      transition: opacity 180ms ease, transform 180ms ease;
+    }
+    .toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+    .filter-sheet { display: contents; }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
+    @keyframes pulse { 50% { transform: scale(.76); opacity: .65; } }
+    @keyframes blink { 50% { opacity: 0; } }
+    @keyframes shimmer { to { transform: translateX(100%); } }
+    @keyframes newFiling { 0% { background: color-mix(in oklch, var(--accent) 42%, var(--surface)); transform: translateY(-10px); } 65% { background: color-mix(in oklch, var(--accent) 18%, transparent); } 100% { background: transparent; transform: none; } }
+    @keyframes reveal { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+    .masthead, .court-pulse, .main-grid, .filter-bar, .docket-layout { animation: reveal 500ms ease both; }
+    .court-pulse { animation-delay: 70ms; }
+    .main-grid { animation-delay: 130ms; }
+    .filter-bar { animation-delay: 180ms; }
+    .docket-layout { animation-delay: 230ms; }
+
+    @media (max-width: 1180px) {
+      :root { --page: min(100% - 32px, 1120px); }
+      .court-pulse { grid-template-columns: 190px 1fr; }
+      .pulse-output { grid-column: 1 / -1; min-height: 58px; border-top: 1px solid color-mix(in oklch, var(--surface) 25%, transparent); }
+      .filter-bar { grid-template-columns: repeat(3, 1fr); }
+      .docket-layout { grid-template-columns: 1fr; }
+      .accused { position: static; order: -1; display: grid; grid-template-columns: 220px repeat(4, minmax(180px, 1fr)); overflow-x: auto; }
+      .accused header { position: sticky; left: 0; z-index: 1; background: var(--surface); border-bottom: 0; border-right: 3px double var(--fg); }
+      .person { border-bottom: 0; border-right: 1px solid color-mix(in oklch, var(--fg) 35%, transparent); }
+      .filing { grid-template-columns: 150px 1.35fr .9fr 150px; }
+    }
+
+    @media (max-width: 820px) {
+      .masthead-main { align-items: flex-start; flex-direction: column; }
+      .masthead-nav { width: 100%; justify-content: flex-start; }
+      .search-wrap { flex: 1 1 100%; min-width: 100%; }
+      .court-pulse { grid-template-columns: 1fr; }
+      .pulse-title { border-right: 0; border-bottom: 1px solid color-mix(in oklch, var(--surface) 25%, transparent); }
+      .pulse-output { grid-column: auto; }
+      .main-grid { grid-template-columns: 1fr; }
+      .featured, .evidence-brief { min-height: auto; }
+      .filter-bar { display: flex; align-items: center; justify-content: space-between; }
+      .filter-bar .filter-group, .filter-bar > .text-button { display: none; }
+      .mobile-filter-button { display: inline-flex; }
+      .filing { grid-template-columns: 135px minmax(0, 1fr); }
+      .filing > :nth-child(3), .filing > :nth-child(4) { grid-column: 2; }
+      .filing-actions { flex-direction: row; }
+      .filing-actions .button { flex: 1; }
+      .filter-sheet {
+        position: fixed;
+        z-index: 24;
+        inset: auto 0 0;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        padding: 20px;
+        background: var(--surface);
+        border-top: 1px solid var(--fg);
+        transform: translateY(104%);
+        transition: transform 220ms ease;
+      }
+      .filter-sheet.open { transform: translateY(0); }
+      .filter-sheet .filter-group, .filter-sheet > .text-button { display: block; }
+    }
+
+    @media (max-width: 560px) {
+      :root { --page: calc(100% - 24px); }
+      .masthead-top { align-items: flex-start; }
+      .masthead-top .refresh-label { text-align: right; }
+      .seal { width: 56px; }
+      .brand h1 { font-size: 39px; }
+      .brand p { font-size: 13px; }
+      .pulse-stages { grid-template-columns: 1fr 1fr; }
+      .stage { border-bottom: 1px solid color-mix(in oklch, var(--surface) 22%, transparent); }
+      .featured { padding: 24px 22px 90px; }
+      .featured-kicker, .section-head { align-items: flex-start; }
+      .featured h2 { font-size: clamp(37px, 12vw, 54px); margin-left: .34em; }
+      .exchange-line { grid-template-columns: 1fr; gap: 3px; }
+      .featured-actions .button { width: 100%; }
+      .accused { grid-template-columns: 190px repeat(4, 165px); }
+      .filing { display: block; padding: 18px 4px; }
+      .filing > * + * { margin-top: 15px; }
+      .filing-actions { display: grid; grid-template-columns: 1fr 1fr; }
+      .filter-sheet { grid-template-columns: 1fr; max-height: 86dvh; overflow-y: auto; }
+      .drawer { top: auto; bottom: 0; width: 100%; height: min(82dvh, 720px); border-left: 0; border-top: 1px solid var(--fg); transform: translateY(104%); }
+      .drawer.open { transform: translateY(0); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="masthead page">
+    <div class="masthead-top">
+      <div class="court-live meta"><span class="live-mark" aria-hidden="true"></span> Court in session</div>
+      <button class="text-button meta refresh-label" id="refreshButton"><i data-lucide="refresh-cw" width="14" height="14" aria-hidden="true"></i> Evidence refreshed <span id="refreshTime">14:32 UTC</span></button>
+    </div>
+    <div class="masthead-main">
+      <div class="brand">
+        <div class="seal" aria-label="AI Prophecy Court seal">APC</div>
+        <div>
+          <h1>AI Prophecy Court</h1>
+          <p>Public promises enter. Cited evidence answers.</p>
+        </div>
+      </div>
+      <nav class="masthead-nav" aria-label="Primary navigation">
+        <label class="search-wrap">
+          <span class="sr-only">Search the live docket</span>
+          <input id="searchInput" type="search" placeholder="Search claims, people, evidence">
+          <span aria-hidden="true"><i data-lucide="search" width="15" height="15"></i></span>
+        </label>
+        <a class="nav-link" href="#accused">People</a>
+        <a class="nav-link" href="#archive" id="archiveLink">Verdict Archive</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page">
+    <section class="court-pulse" aria-labelledby="pulseHeading">
+      <div class="pulse-title">
+        <span class="eyebrow">Court pulse</span>
+        <strong id="pulseHeading">AI at work</strong>
+      </div>
+      <div class="pulse-stages" id="pulseStages">
+        <button class="stage active" data-stage="0"><span class="stage-index">I</span><span class="stage-label">Ingesting</span></button>
+        <button class="stage" data-stage="1"><span class="stage-index">II</span><span class="stage-label">Context</span></button>
+        <button class="stage" data-stage="2"><span class="stage-index">III</span><span class="stage-label">Objections</span></button>
+        <button class="stage" data-stage="3"><span class="stage-index">IV</span><span class="stage-label">Verdict</span></button>
+      </div>
+      <div class="pulse-output cursor" id="pulseOutput" aria-live="polite">Reading 12 cited posts and 3 transcript passages for date, scope, and qualification.</div>
+    </section>
+
+    <div class="main-grid" id="featuredArea">
+      <article class="featured">
+        <div class="featured-kicker">
+          <span class="eyebrow">Featured live filing · APC-2026-014</span>
+          <span class="status status-ok">Evidence confidence · 82%</span>
+        </div>
+        <h2>We will likely have systems that are smarter than any human in most ways within a few thousand days.</h2>
+        <div class="case-meta">
+          <span class="tag">Sam Altman</span>
+          <span class="tag">OpenAI</span>
+          <span class="tag verified">Verified source</span>
+          <span class="tag">Essay · September 2024</span>
+        </div>
+        <div class="confidence" aria-label="Evidence confidence 82 percent">
+          <span class="eyebrow">Context finding</span>
+          <span class="confidence-rule" aria-hidden="true"></span>
+          <strong>82%</strong>
+        </div>
+        <div class="exchange" aria-label="Generated court reaction">
+          <div class="exchange-line"><span class="speaker">Judge Mycelia</span><span>“A thousand days is still a date, counsel, even when dressed as geological weather.”</span></div>
+          <div class="exchange-line"><span class="speaker">Prosecutor Thorn</span><span>“The court notes that ‘most ways’ has arrived without luggage, definitions, or a return ticket.”</span></div>
+        </div>
+        <div class="featured-actions">
+          <button class="button primary send-trial" data-case="altman"><i data-lucide="gavel" width="17" height="17" aria-hidden="true"></i> Send to Trial</button>
+          <button class="button inspect-evidence" data-id="featured"><i data-lucide="file-search" width="17" height="17" aria-hidden="true"></i> Inspect cited evidence</button>
+        </div>
+      </article>
+
+      <aside class="evidence-brief" aria-label="Featured evidence brief">
+        <div class="brief-copy">
+          <div>
+            <span class="eyebrow">Clerk's evidence brief</span>
+            <h3>The timeline is public. The definition is not.</h3>
+            <p>The court found a traceable essay, two related interviews, and a widening gap between the claim's confidence and its measurable terms.</p>
+          </div>
+          <div>
+            <div class="citation">samaltman.com/the-intelligence-age</div>
+            <button class="text-button inspect-evidence" data-id="featured">Open exhibit record</button>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <section class="filter-bar" aria-label="Docket filters">
+      <div class="filter-sheet" id="filterSheet">
+        <label class="filter-group"><span class="filter-label">Organization</span><select id="orgFilter"><option value="">All organizations</option></select></label>
+        <label class="filter-group"><span class="filter-label">Person</span><select id="personFilter"><option value="">All people</option></select></label>
+        <label class="filter-group"><span class="filter-label">Source</span><select id="sourceFilter"><option value="">All sources</option><option>X post</option><option>Video transcript</option><option>Essay</option><option>Demo brief</option></select></label>
+        <label class="filter-group"><span class="filter-label">Confidence</span><select id="confidenceFilter"><option value="">Any confidence</option><option value="high">High · 80%+</option><option value="medium">Medium · 60–79%</option><option value="low">Developing · below 60%</option></select></label>
+        <label class="filter-group"><span class="filter-label">Roast status</span><select id="statusFilter"><option value="">Any status</option><option>Fresh objection</option><option>Context checked</option><option>Awaiting evidence</option><option>On the docket</option></select></label>
+        <button class="text-button" id="clearFilters">Clear filters</button>
+      </div>
+      <button class="button mobile-filter-button" id="filterToggle" aria-expanded="false">Open docket filters</button>
+      <span class="meta"><span id="resultCount">0</span> active filings</span>
+    </section>
+
+    <div class="docket-layout">
+      <section aria-labelledby="docketHeading">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow">Clerk's register · updating live</span>
+            <h2 id="docketHeading">Live docket</h2>
+          </div>
+          <button class="text-button meta" id="newClaimButton"><i data-lucide="radio-tower" width="14" height="14" aria-hidden="true"></i> Simulate new filing</button>
+        </div>
+        <div class="register" id="register" aria-live="polite"></div>
+        <div class="state-panel" id="emptyState" hidden>
+          <span class="eyebrow">No matching filings</span>
+          <h3>The clerk found an empty drawer.</h3>
+          <p>Clear the current filters to return to the full live docket.</p>
+          <button class="button" id="emptyClear">Clear filters</button>
+        </div>
+        <div class="state-panel" id="loadingState" hidden aria-live="polite">
+          <span class="eyebrow">Refreshing evidence</span>
+          <div class="skeleton skeleton-line big"></div>
+          <div class="skeleton skeleton-line"></div>
+          <div class="skeleton skeleton-line"></div>
+          <div class="skeleton skeleton-line" style="width:72%"></div>
+        </div>
+      </section>
+
+      <aside class="accused" id="accused" aria-labelledby="accusedHeading">
+        <header>
+          <span class="eyebrow">People index</span>
+          <h2 id="accusedHeading">The Accused</h2>
+        </header>
+        <div class="person" data-person="Sam Altman"><button class="person-select"><strong>Sam Altman</strong><span class="person-detail"><span>OpenAI · 4 claims</span><span>Objection filed</span></span></button><a class="dossier-link" href="#dossier" data-dossier="Sam Altman">Open dossier</a></div>
+        <div class="person" data-person="Dario Amodei"><button class="person-select"><strong>Dario Amodei</strong><span class="person-detail"><span>Anthropic · 3 claims</span><span>Context checked</span></span></button><a class="dossier-link" href="#dossier" data-dossier="Dario Amodei">Open dossier</a></div>
+        <div class="person" data-person="Sundar Pichai"><button class="person-select"><strong>Sundar Pichai</strong><span class="person-detail"><span>Google · 2 claims</span><span>Bench review</span></span></button><a class="dossier-link" href="#dossier" data-dossier="Sundar Pichai">Open dossier</a></div>
+        <div class="person" data-person="Mark Zuckerberg"><button class="person-select"><strong>Mark Zuckerberg</strong><span class="person-detail"><span>Meta · 2 claims</span><span>Fresh roast</span></span></button><a class="dossier-link" href="#dossier" data-dossier="Mark Zuckerberg">Open dossier</a></div>
+      </aside>
+    </div>
+  </main>
+
+  <div class="drawer-backdrop" id="drawerBackdrop"></div>
+  <aside class="drawer" id="evidenceDrawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle" aria-hidden="true">
+    <div class="drawer-head">
+      <div><span class="eyebrow" id="drawerLabel">Verified source</span><h2 id="drawerTitle">Evidence record</h2></div>
+      <button class="icon-button" id="drawerClose" aria-label="Close evidence"><i data-lucide="x" width="20" height="20" aria-hidden="true"></i></button>
+    </div>
+    <div class="evidence-block"><span class="eyebrow">Claim under review</span><h3 id="drawerClaim"></h3></div>
+    <div class="evidence-block"><span class="eyebrow">Context finding</span><p id="drawerContext"></p></div>
+    <div class="evidence-block"><span class="eyebrow">Confidence rationale</span><p id="drawerConfidence"></p></div>
+    <div class="evidence-block"><span class="eyebrow">Citation</span><p class="citation"><a id="drawerLink" href="#" target="_blank" rel="noreferrer">Open direct source</a></p></div>
+    <button class="button primary send-trial" id="drawerTrial"><i data-lucide="gavel" width="17" height="17" aria-hidden="true"></i> Send to Trial</button>
+  </aside>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js" crossorigin="anonymous"></script>
+  <script>
+    const filings = [
+      { id:"altman", person:"Sam Altman", org:"OpenAI", source:"Essay", time:"18 min ago", claim:"Superintelligence may arrive within a few thousand days.", reaction:"Judge Mycelia requests a calendar and a definition of ‘most ways.’", confidence:82, status:"Fresh objection", label:"VERIFIED SOURCE", url:"https://ia.samaltman.com/", context:"The cited essay is public and traceable. The court is testing the prediction's scope, timing language, and absence of measurable thresholds.", rationale:"High source confidence; medium interpretive confidence because the central terms remain broad." },
+      { id:"amodei", person:"Dario Amodei", org:"Anthropic", source:"Essay", time:"31 min ago", claim:"Powerful AI could compress a century of biological progress into a decade.", reaction:"Prosecutor Thorn asks whether history has agreed to the compression format.", confidence:86, status:"Context checked", label:"VERIFIED SOURCE", url:"https://www.darioamodei.com/essay/machines-of-loving-grace", context:"The essay directly presents accelerated biological progress as a plausible consequence of powerful AI.", rationale:"High source confidence and strong surrounding context; outcome remains explicitly predictive." },
+      { id:"pichai", person:"Sundar Pichai", org:"Google", source:"X post", time:"47 min ago", claim:"AI will be more profound than fire or electricity.", reaction:"The bench admits electricity as evidence and asks it to remain available for cross-examination.", confidence:91, status:"Fresh objection", label:"DEMO EVIDENCE", url:"https://x.com/sundarpichai", context:"The comparison is repeatedly attributed in public statements. This prototype points to the verified profile while the exact source post is selected from the collected dataset.", rationale:"High confidence in the recurring public claim; the exact filing still requires source-record verification." },
+      { id:"nadella", person:"Satya Nadella", org:"Microsoft", source:"LinkedIn post", time:"1 hr ago", claim:"AI agents will reshape every category of software.", reaction:"The court has subpoenaed ‘every category,’ a witness known for avoiding specifics.", confidence:73, status:"Context checked", label:"DEMO EVIDENCE", url:"https://www.linkedin.com/in/satyanadella/", context:"Composite demo filing based on recurring public agent-platform positioning. The wording is clearly marked as demo evidence.", rationale:"The theme is traceable, but this exact sentence is a demo composite and must not be treated as a direct quote." },
+      { id:"zuckerberg", person:"Mark Zuckerberg", org:"Meta", source:"X post", time:"1 hr 24 min ago", claim:"Open-source models will become the industry standard.", reaction:"Judge Mycelia notes that standards usually arrive with paperwork, not just confidence.", confidence:78, status:"Awaiting evidence", label:"DEMO EVIDENCE", url:"https://about.fb.com/news/", context:"A demo paraphrase of Meta's public open-model advocacy, included to demonstrate evidence review states.", rationale:"Organization position is clear; exact wording and primary source are still being verified." },
+      { id:"lecun", person:"Yann LeCun", org:"Meta", source:"X post", time:"2 hr ago", claim:"Autoregressive language models will not lead to human-level intelligence.", reaction:"Prosecutor Thorn enters one architecture dispute and several years of quote-posts into evidence.", confidence:88, status:"Context checked", label:"VERIFIED SOURCE", url:"https://x.com/ylecun", context:"The public position is repeatedly documented across posts and talks. The court tests whether later qualifications alter the categorical reading.", rationale:"High confidence in the position; exact post threads should be read together for technical context." },
+      { id:"jiang", person:"Aidan Gomez", org:"Cohere", source:"Demo brief", time:"2 hr 18 min ago", claim:"Enterprise AI value will be won through deployment, not model spectacle.", reaction:"The court welcomes the sudden appearance of a measurable noun.", confidence:58, status:"Awaiting evidence", label:"DEMO EVIDENCE", url:"https://cohere.com/blog", context:"Clearly labelled demo synthesis based on enterprise AI messaging, not a direct quotation.", rationale:"Plausible positioning with incomplete primary-source matching." },
+      { id:"delangue", person:"Clément Delangue", org:"Hugging Face", source:"X post", time:"2 hr 31 min ago", claim:"Open models will keep closing the capability gap.", reaction:"The bench asks the gap to remain still long enough to be measured.", confidence:64, status:"Awaiting evidence", label:"DEMO EVIDENCE", url:"https://x.com/ClementDelangue", context:"Demo paraphrase of repeated public advocacy for open models. It is not a direct quotation.", rationale:"The strategic position is traceable; exact wording and date are still under clerk review." },
+      { id:"huang", person:"Jensen Huang", org:"NVIDIA", source:"LinkedIn post", time:"2 hr 44 min ago", claim:"Every company will become an intelligence manufacturer.", reaction:"Judge Mycelia asks whether the intelligence ships with a power adapter.", confidence:69, status:"Context checked", label:"DEMO EVIDENCE", url:"https://www.linkedin.com/in/jenhsunhuang/", context:"Demo paraphrase based on recurring public positioning. It is not presented as a verbatim quotation.", rationale:"The strategic theme is public; this concise wording is generated for the demo." },
+      { id:"suleyman", person:"Mustafa Suleyman", org:"Microsoft", source:"Essay", time:"3 hr ago", claim:"AI will become a new digital species.", reaction:"The clerk has asked taxonomy to report for emergency duty.", confidence:84, status:"Fresh objection", label:"VERIFIED SOURCE", url:"https://www.microsoft.com/en-us/microsoft-ai", context:"The phrase has appeared in public discussion around AI's societal role. The court examines metaphor versus operational prediction.", rationale:"Strong attribution confidence; medium confidence that the metaphor has a falsifiable interpretation." }
+    ];
+
+    const demoArrival = { id:"musk", person:"Elon Musk", org:"xAI", source:"X post", time:"just now", claim:"AI capability will arrive sooner than institutions expect.", reaction:"Prosecutor Thorn calls the word ‘sooner’ for immediate questioning.", confidence:62, status:"Fresh objection", label:"DEMO EVIDENCE", url:"https://x.com/elonmusk", context:"Demo paraphrase based on public AI timeline commentary. It is not presented as a verbatim quotation.", rationale:"The recurring position is traceable; the compressed timeline remains under source review." };
+
+    const pulseMessages = [
+      "Reading 12 cited posts and 3 transcript passages for date, scope, and qualification.",
+      "Comparing the claim against nearby paragraphs, later interviews, and material changes in wording.",
+      "Drafting two objections: undefined benchmark and elastic timeline. Personal commentary excluded.",
+      "Holding a provisional verdict until the Trial Chamber completes cross-examination."
+    ];
+
+    const state = { filings:[...filings], selected:null, newId:null, pulse:0, loading:false };
+    const filters = ["orgFilter","personFilter","sourceFilter","confidenceFilter","statusFilter"].map(id => document.getElementById(id));
+    const register = document.getElementById("register");
+    const emptyState = document.getElementById("emptyState");
+    const loadingState = document.getElementById("loadingState");
+    const searchInput = document.getElementById("searchInput");
+    const resultCount = document.getElementById("resultCount");
+    const toast = document.getElementById("toast");
+    const drawer = document.getElementById("evidenceDrawer");
+    const backdrop = document.getElementById("drawerBackdrop");
+    let toastTimer;
+
+    function unique(key) { return [...new Set(state.filings.map(item => item[key]))].sort(); }
+    function populateSelect(id, values) {
+      const select = document.getElementById(id);
+      const current = select.value;
+      select.querySelectorAll("option:not(:first-child)").forEach(o => o.remove());
+      values.forEach(value => select.add(new Option(value, value)));
+      select.value = current;
+    }
+    function syncOptions() {
+      populateSelect("orgFilter", unique("org"));
+      populateSelect("personFilter", unique("person"));
+    }
+    function confidenceBand(value) { return value >= 80 ? "high" : value >= 60 ? "medium" : "low"; }
+    function currentResults() {
+      const q = searchInput.value.trim().toLowerCase();
+      const [org, person, source, confidence, status] = filters.map(f => f.value);
+      return state.filings.filter(item => {
+        const haystack = [item.person,item.org,item.source,item.claim,item.reaction,item.status].join(" ").toLowerCase();
+        return (!q || haystack.includes(q)) &&
+          (!org || item.org === org) &&
+          (!person || item.person === person) &&
+          (!source || item.source === source) &&
+          (!confidence || confidenceBand(item.confidence) === confidence) &&
+          (!status || item.status === status);
+      });
+    }
+    function filingTemplate(item) {
+      const selected = state.selected === item.id ? " selected" : "";
+      const fresh = state.newId === item.id ? " new" : "";
+      const statusClass = item.label === "VERIFIED SOURCE" ? "status-ok" : "status-demo";
+      return `<article class="filing${selected}${fresh}" data-id="${item.id}">
+        <div>${fresh ? '<span class="new-stamp eyebrow">New filing</span>' : ""}${selected ? '<span class="eyebrow status-ok">Selected filing</span>' : ""}<h3>${item.person}</h3><div class="meta">${item.org}</div><div class="source-line"><span class="tag">${item.source}</span><span class="tag">${item.time}</span></div></div>
+        <div><p class="claim">“${item.claim}”</p><div class="source-line"><span class="status ${statusClass}">${item.label}</span><span class="status">${item.confidence}% confidence</span></div></div>
+        <div><span class="eyebrow">Court reaction</span><p class="reaction">${item.reaction}</p><div class="source-line"><span class="status">${item.status}</span></div></div>
+        <div class="filing-actions"><button class="button inspect-evidence" data-id="${item.id}"><i data-lucide="file-search" width="15" height="15" aria-hidden="true"></i> Inspect evidence</button><button class="button send-trial" data-case="${item.id}" ${item.status === "On the docket" ? "disabled" : ""}><i data-lucide="gavel" width="15" height="15" aria-hidden="true"></i> ${item.status === "On the docket" ? "On the docket" : "Send to Trial"}</button></div>
+      </article>`;
+    }
+    function render() {
+      const results = currentResults();
+      resultCount.textContent = results.length;
+      register.innerHTML = results.map(filingTemplate).join("");
+      emptyState.hidden = state.loading || results.length > 0;
+      register.hidden = state.loading || results.length === 0;
+      loadingState.hidden = !state.loading;
+      if (window.lucide) lucide.createIcons({ attrs: { "stroke-width": 1.65 } });
+    }
+    function clearFilters() {
+      filters.forEach(f => f.value = "");
+      searchInput.value = "";
+      document.querySelectorAll(".person").forEach(p => p.classList.remove("active"));
+      render();
+    }
+    function showToast(message) {
+      clearTimeout(toastTimer);
+      toast.textContent = message;
+      toast.classList.add("show");
+      toastTimer = setTimeout(() => toast.classList.remove("show"), 3200);
+    }
+    function getItem(id) {
+      if (id === "featured") return state.filings[0];
+      return state.filings.find(item => item.id === id);
+    }
+    function openEvidence(id) {
+      const item = getItem(id);
+      if (!item) return;
+      state.selected = item.id;
+      render();
+      document.getElementById("drawerLabel").textContent = item.label;
+      document.getElementById("drawerTitle").textContent = `${item.person} evidence`;
+      document.getElementById("drawerClaim").textContent = `“${item.claim}”`;
+      document.getElementById("drawerContext").textContent = item.context;
+      document.getElementById("drawerConfidence").textContent = `${item.confidence}% confidence. ${item.rationale}`;
+      document.getElementById("drawerLink").href = item.url;
+      document.getElementById("drawerLink").textContent = item.url;
+      document.getElementById("drawerTrial").dataset.case = item.id;
+      drawer.classList.add("open");
+      backdrop.classList.add("open");
+      drawer.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+      document.getElementById("drawerClose").focus();
+    }
+    function closeEvidence() {
+      drawer.classList.remove("open");
+      backdrop.classList.remove("open");
+      drawer.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+    }
+    function sendToTrial(id) {
+      const item = getItem(id);
+      if (!item) return;
+      item.status = "On the docket";
+      render();
+      showToast(`${item.person}'s claim is on the Trial Chamber docket. The court is preparing cross-examination.`);
+      if (drawer.classList.contains("open")) closeEvidence();
+    }
+    function setPulse(index) {
+      state.pulse = index;
+      document.querySelectorAll(".stage").forEach((stage, i) => stage.classList.toggle("active", i === index));
+      document.getElementById("pulseOutput").textContent = pulseMessages[index];
+    }
+    function simulateArrival() {
+      if (state.filings.some(item => item.id === demoArrival.id)) {
+        showToast("The Demis Hassabis filing is already in the register.");
+        return;
+      }
+      state.filings.unshift({...demoArrival});
+      state.newId = demoArrival.id;
+      syncOptions();
+      clearFilters();
+      showToast("New filing received. The court has begun checking transcript context.");
+      setTimeout(() => { state.newId = null; render(); }, 3000);
+    }
+    function simulateLoading() {
+      state.loading = true;
+      render();
+      document.getElementById("refreshTime").textContent = "checking sources";
+      setTimeout(() => {
+        state.loading = false;
+        document.getElementById("refreshTime").textContent = new Date().toISOString().slice(11,16) + " UTC";
+        render();
+        showToast("Evidence refresh complete. Two contexts strengthened; no citations were removed.");
+      }, 1350);
+    }
+
+    document.addEventListener("click", event => {
+      const inspect = event.target.closest(".inspect-evidence");
+      const trial = event.target.closest(".send-trial");
+      const filing = event.target.closest(".filing");
+      if (inspect) { event.stopPropagation(); openEvidence(inspect.dataset.id); return; }
+      if (trial) { event.stopPropagation(); sendToTrial(trial.dataset.case); return; }
+      if (filing) { state.selected = filing.dataset.id; render(); }
+    });
+    filters.forEach(filter => filter.addEventListener("change", render));
+    searchInput.addEventListener("input", render);
+    document.getElementById("clearFilters").addEventListener("click", clearFilters);
+    document.getElementById("emptyClear").addEventListener("click", clearFilters);
+    document.getElementById("newClaimButton").addEventListener("click", simulateArrival);
+    document.getElementById("refreshButton").addEventListener("click", simulateLoading);
+    document.getElementById("drawerClose").addEventListener("click", closeEvidence);
+    backdrop.addEventListener("click", closeEvidence);
+    document.addEventListener("keydown", event => { if (event.key === "Escape") closeEvidence(); });
+    document.querySelectorAll(".stage").forEach(stage => stage.addEventListener("click", () => setPulse(Number(stage.dataset.stage))));
+    document.querySelectorAll(".person-select").forEach(control => control.addEventListener("click", () => {
+      const person = control.closest(".person");
+      const active = person.classList.toggle("active");
+      document.querySelectorAll(".person").forEach(other => { if (other !== person) other.classList.remove("active"); });
+      document.getElementById("personFilter").value = active ? person.dataset.person : "";
+      render();
+      window.scrollTo({ top: document.querySelector(".filter-bar").offsetTop - 12, behavior: "smooth" });
+    }));
+    document.querySelectorAll(".dossier-link").forEach(link => link.addEventListener("click", event => {
+      event.preventDefault();
+      showToast(`${link.dataset.dossier}'s Individual Dossier is the next product surface and is not built in this focused pass.`);
+    }));
+    document.getElementById("filterToggle").addEventListener("click", event => {
+      const open = document.getElementById("filterSheet").classList.toggle("open");
+      event.currentTarget.setAttribute("aria-expanded", String(open));
+      event.currentTarget.textContent = open ? "Close docket filters" : "Open docket filters";
+    });
+    document.getElementById("archiveLink").addEventListener("click", event => {
+      event.preventDefault();
+      showToast("Verdict Archive is part of the locked product architecture and is not built in this focused pass.");
+    });
+
+    syncOptions();
+    render();
+    if (window.lucide) lucide.createIcons({ attrs: { "stroke-width": 1.65 } });
+    setInterval(() => setPulse((state.pulse + 1) % pulseMessages.length), 6500);
+  </script>
+</body>
+</html>
