@@ -93,6 +93,43 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .jury-box h3 { margin: 5px 0 0; font: 700 1.35rem Georgia, serif; }
 .vote-actions { display: flex; gap: 8px; flex-wrap: wrap; }
 .verdict-actions p { margin: 5px 0 0; color: var(--muted); }
+.runtime-note { flex-basis: 100%; font-size: .82rem; }
+.verdict-card-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(230px, 360px);
+  gap: 34px;
+  align-items: center;
+  padding: clamp(24px, 4vw, 48px);
+  border: solid var(--ink);
+  border-width: 0 1px 1px;
+  background: var(--acid);
+}
+.verdict-card-panel h3 {
+  margin: 8px 0;
+  font: 700 clamp(1.8rem, 3vw, 3.2rem)/1 Georgia, serif;
+}
+.verdict-card-panel p { max-width: 650px; color: color-mix(in srgb, var(--ink) 75%, transparent); }
+.verdict-card-panel img {
+  width: 100%;
+  border: 1px solid var(--ink);
+  box-shadow: 8px 8px 0 var(--ink);
+  background: var(--paper);
+}
+.verdict-card-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 24px; }
+.download-link {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid var(--ink);
+  padding: 8px 16px;
+  background: var(--ink);
+  color: var(--paper-light);
+  font-size: .875rem;
+  font-weight: 700;
+  text-decoration: none;
+}
 
 .defendants { padding-block: 30px 90px; }
 .section-heading { display: flex; justify-content: space-between; gap: 24px; align-items: end; padding-bottom: 16px; border-bottom: 3px double var(--ink); }
@@ -160,6 +197,8 @@ button, a { -webkit-tap-highlight-color: transparent; }
   .hero-copy h1 { font-size: clamp(3rem, 15vw, 5.2rem); }
   .proceeding { padding: 22px; }
   .trial-controls, .jury-box, .verdict-actions, .section-heading { align-items: stretch; flex-direction: column; }
+  .verdict-card-panel { grid-template-columns: 1fr; }
+  .verdict-card-panel img { max-width: 360px; }
   .proceeding-battle .proceeding-body { grid-template-columns: 1fr; }
   .deliberation { grid-template-columns: 1fr; }
   .deliberation span { border-right: 0; border-bottom: 1px solid var(--ink); }

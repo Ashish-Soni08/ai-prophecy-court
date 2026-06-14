@@ -30,6 +30,8 @@ You are the jury.
 AI Prophecy Court turns preserved public posts into playful, source-linked
 court cases. Pick a roast division, give two models the same evidence packet,
 vote for the sharper argument, and reveal which model wrote each roast.
+The jury can then export a source-stamped verdict card and copy a social
+caption without sending the image to another service.
 
 ## Why AI Is Load-Bearing
 
@@ -47,6 +49,7 @@ during cold starts or provider outages.
 - Verdicts evaluate rhetoric inside the collected dataset; they are not
   external fact checks.
 - Model identities stay hidden until the visitor votes.
+- Verdict cards are rendered locally and preserve the source content ID.
 - No model used by the project exceeds 32B parameters.
 
 ## Stack

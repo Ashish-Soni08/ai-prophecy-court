@@ -29,8 +29,9 @@ Status as of June 14, 2026.
 - [x] Mobile and desktop layouts are implemented.
 - [x] Loading, error, deliberation, vote, and reveal states exist.
 - [ ] Replace initial placeholders with reviewed leader portraits.
-- [ ] Generate and test a shareable verdict card.
-- [ ] Run final keyboard and screen-reader checks on the deployed Space.
+- [x] Generate and test a downloadable shareable verdict card.
+- [x] Run local keyboard navigation and automated WCAG A/AA checks.
+- [ ] Repeat keyboard and screen-reader checks on the deployed Space.
 
 ## Optional Bonus Evidence
 

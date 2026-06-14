@@ -12,6 +12,7 @@ the model identities are revealed.
 - Technical, guarded-dark, and dad-joke roast profiles
 - Blind Nemotron 4B versus MiniCPM 8B comparison
 - Anonymous session votes with optional aggregate Modal persistence
+- Downloadable 1200x1500 verdict cards with source IDs and social captions
 - Reviewed curated fallback when live inference is unavailable
 - Deterministic screening of 2,117 normalized social records into 483 docket
   candidates
@@ -43,6 +44,7 @@ MODAL_RUNTIME_TOKEN=
 uv run pytest -q
 npm --prefix space/frontend run test
 npm --prefix space/frontend run build
+npm --prefix space/frontend run test:e2e
 ```
 
 ## Build The Docket Queue
@@ -85,6 +87,10 @@ See:
 - `docs/submission-checklist.md` for hackathon readiness
 - `runtime/README.md` for Modal deployment
 - `runtime/model-manifest.yaml` for the parameter-cap audit
+
+The Playwright suite runs the complete trial-to-verdict-card journey in
+Chromium, checks direct routes, verifies keyboard navigation, and scans primary
+pages for serious WCAG A/AA violations with axe.
 
 ## Retained Data
 

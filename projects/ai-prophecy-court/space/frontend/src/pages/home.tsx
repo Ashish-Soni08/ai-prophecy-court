@@ -1,7 +1,17 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowRight, ExternalLink, Gavel, ShieldCheck, Volume2 } from "lucide-react";
-import { useMemo, useState } from "react";
+import {
+  ArrowRight,
+  Check,
+  Copy,
+  Download,
+  ExternalLink,
+  Gavel,
+  Image,
+  ShieldCheck,
+  Volume2,
+} from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 
 import { CourtRenderer } from "../components/court-renderer";
@@ -14,6 +24,11 @@ import {
   synthesizeVerdict,
 } from "../lib/api";
 import type { RoastStyle, VoteReveal } from "../lib/contracts";
+import {
+  buildVerdictCardCopy,
+  createVerdictCard,
+  verdictCardFilename,
+} from "../lib/verdict-card";
 
 const styleCopy: Record<RoastStyle, string> = {
   technical: "Technical",
@@ -26,6 +41,8 @@ export function HomePage() {
   const [style, setStyle] = useState<RoastStyle>("technical");
   const [reveal, setReveal] = useState<VoteReveal>();
   const [choice, setChoice] = useState<string>();
+  const [cardUrl, setCardUrl] = useState<string>();
+  const [captionCopied, setCaptionCopied] = useState(false);
   const sessionId = useMemo(() => crypto.randomUUID(), []);
 
   const trial = useMutation({
@@ -33,6 +50,11 @@ export function HomePage() {
     onMutate: () => {
       setReveal(undefined);
       setChoice(undefined);
+      setCardUrl((current) => {
+        if (current) URL.revokeObjectURL(current);
+        return undefined;
+      });
+      setCaptionCopied(false);
     },
   });
   const vote = useMutation({
@@ -54,6 +76,36 @@ export function HomePage() {
       );
     },
   });
+  const card = useMutation({
+    mutationFn: async () => {
+      const input = {
+        caseFile: featured,
+        leader,
+        trial: trial.data!,
+        reveal: reveal!,
+        choice: choice!,
+        style,
+      };
+      return {
+        blob: await createVerdictCard(input),
+        caption: buildVerdictCardCopy(input).caption,
+        filename: verdictCardFilename(input),
+      };
+    },
+    onSuccess: ({ blob }) => {
+      setCardUrl((current) => {
+        if (current) URL.revokeObjectURL(current);
+        return URL.createObjectURL(blob);
+      });
+    },
+  });
+
+  useEffect(
+    () => () => {
+      if (cardUrl) URL.revokeObjectURL(cardUrl);
+    },
+    [cardUrl],
+  );
 
   if (bootstrap.isPending) return <CourtLoading />;
   if (bootstrap.isError || !bootstrap.data) return <CourtError />;
@@ -179,7 +231,10 @@ export function HomePage() {
                       {voice.isPending ? "Calling the clerk..." : "Hear the winning roast"}
                     </Button>
                   ) : null}
-                  <Button disabled>Generate verdict card</Button>
+                  <Button onClick={() => card.mutate()} disabled={card.isPending}>
+                    <Image aria-hidden="true" size={17} />
+                    {card.isPending ? "Developing evidence..." : "Generate verdict card"}
+                  </Button>
                   {voice.data?.audio_url ? (
                     <audio controls autoPlay src={voice.data.audio_url}>
                       Your browser does not support audio playback.
@@ -190,6 +245,51 @@ export function HomePage() {
                   ) : null}
                 </div>
               )}
+              {cardUrl && card.data ? (
+                <motion.section
+                  className="verdict-card-panel"
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  aria-labelledby="verdict-card-heading"
+                >
+                  <div>
+                    <div className="scene-label">Social evidence prepared</div>
+                    <h3 id="verdict-card-heading">Your verdict card is ready.</h3>
+                    <p>
+                      The PNG includes the public source ID, jury outcome, and unsealed
+                      model credit.
+                    </p>
+                    <div className="verdict-card-actions">
+                      <a
+                        className="download-link"
+                        href={cardUrl}
+                        download={card.data.filename}
+                      >
+                        <Download aria-hidden="true" size={17} />
+                        Download PNG
+                      </a>
+                      <Button
+                        variant="secondary"
+                        onClick={async () => {
+                          await navigator.clipboard.writeText(card.data.caption);
+                          setCaptionCopied(true);
+                        }}
+                      >
+                        {captionCopied ? (
+                          <Check aria-hidden="true" size={17} />
+                        ) : (
+                          <Copy aria-hidden="true" size={17} />
+                        )}
+                        {captionCopied ? "Caption copied" : "Copy social caption"}
+                      </Button>
+                    </div>
+                  </div>
+                  <img
+                    src={cardUrl}
+                    alt={`Verdict card for ${leader.name}: ${card.data.filename}`}
+                  />
+                </motion.section>
+              ) : null}
             </motion.div>
           )}
         </AnimatePresence>

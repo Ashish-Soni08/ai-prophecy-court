@@ -21,6 +21,8 @@ The experience is a rhetorical court, not a factual adjudication system.
 6. The visitor votes `A`, `B`, `both`, or `dismissed`.
 7. The app reveals the model identities and aggregate reaction state.
 8. When configured, a visitor who chose A or B can request a voice rendition.
+9. The visitor can render a 1200x1500 source-stamped verdict card, download it
+   as PNG, and copy a ready-to-edit social caption.
 
 ## Routes
 
@@ -135,6 +137,8 @@ components, inject HTML, navigate, or execute code.
 - A runtime outage completes through the curated fallback.
 - Source URLs remain visible and clickable.
 - Python tests, frontend tests, and the Vite production build pass.
+- Playwright completes the primary journey and axe finds no serious WCAG A/AA
+  violations on the homepage, archive, or featured dossier.
 - CI builds `frontend/dist` before creating the Hugging Face Space subtree.
 - Demo and social links remain visibly pending until real URLs exist.
 
@@ -143,7 +147,6 @@ components, inject HTML, navigate, or execute code.
 - Full-dataset automatic case publication
 - External fact checking
 - User-submitted targets or free-form roast prompts
-- Shareable verdict card generation
 - Reviewed FLUX leader portraits
 - Deployed VoxCPM2 synthesis
 - Multilingual verdicts

@@ -4,6 +4,8 @@ node_modules/
 __pycache__/
 *.pyc
 *.tsbuildinfo
+playwright-report/
+test-results/
 
 .env
 raw/
