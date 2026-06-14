@@ -23,7 +23,11 @@ browser = [
   "browser-use>=0.13.1,<0.14",
 ]
 space = [
-  "gradio>=5.49,<7",
+  "gradio==6.18.0",
+  "httpx>=0.28,<1",
+]
+runtime = [
+  "modal>=1.0,<2",
 ]
 
 [tool.hatch.build.targets.wheel]

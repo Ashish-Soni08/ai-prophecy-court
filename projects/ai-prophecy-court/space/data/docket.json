@@ -1,0 +1,113 @@
+{
+  "leaders": [
+    {
+      "id": "sam-altman",
+      "name": "Sam Altman",
+      "company": "OpenAI",
+      "portrait_url": null,
+      "character_brief": "High-altitude timelines, compact declarations, and a recurring willingness to put civilization-scale claims into a very small number of words.",
+      "presence": [
+        {"platform": "x", "status": "verified-active", "url": "https://x.com/sama", "absence_quip": null},
+        {"platform": "linkedin", "status": "no-account-found", "url": null, "absence_quip": "No verified LinkedIn account entered the record. The thought leadership remains elsewhere."}
+      ],
+      "case_ids": []
+    },
+    {
+      "id": "dario-amodei",
+      "name": "Dario Amodei",
+      "company": "Anthropic",
+      "portrait_url": null,
+      "character_brief": "Long-horizon forecasts delivered with the calm detail of someone who has already seen the footnotes from the future.",
+      "presence": [
+        {"platform": "x", "status": "verified-active", "url": "https://x.com/DarioAmodei", "absence_quip": null},
+        {"platform": "linkedin", "status": "no-account-found", "url": null, "absence_quip": "No verified LinkedIn account was found. The essays appear to be handling the workload."}
+      ],
+      "case_ids": []
+    },
+    {
+      "id": "sundar-pichai",
+      "name": "Sundar Pichai",
+      "company": "Google",
+      "portrait_url": null,
+      "character_brief": "Measured platform optimism, large historical comparisons, and the steady confidence of a keynote that has passed legal review.",
+      "presence": [
+        {"platform": "x", "status": "verified-active", "url": "https://x.com/sundarpichai", "absence_quip": null},
+        {"platform": "linkedin", "status": "verified-active", "url": "https://www.linkedin.com/in/sundarpichai/", "absence_quip": null}
+      ],
+      "case_ids": []
+    },
+    {
+      "id": "satya-nadella",
+      "name": "Satya Nadella",
+      "company": "Microsoft",
+      "portrait_url": null,
+      "character_brief": "Platform shifts, organizational transformation, and a talent for making the next interface sound like it has already joined the quarterly plan.",
+      "presence": [
+        {"platform": "x", "status": "verified-active", "url": "https://x.com/satyanadella", "absence_quip": null},
+        {"platform": "linkedin", "status": "verified-active", "url": "https://www.linkedin.com/in/satyanadella/", "absence_quip": null}
+      ],
+      "case_ids": []
+    },
+    {
+      "id": "clement-delangue",
+      "name": "Clement Delangue",
+      "company": "Hugging Face",
+      "portrait_url": null,
+      "character_brief": "Open-model advocacy with startup velocity: benchmarks become movements, releases become evidence, and exclamation marks arrive fully funded.",
+      "presence": [
+        {"platform": "x", "status": "verified-active", "url": "https://x.com/ClementDelangue", "absence_quip": null},
+        {"platform": "linkedin", "status": "verified-active", "url": "https://www.linkedin.com/in/clementdelangue/", "absence_quip": null}
+      ],
+      "case_ids": ["local-model-majority"]
+    },
+    {
+      "id": "jensen-huang",
+      "name": "Jensen Huang",
+      "company": "NVIDIA",
+      "portrait_url": null,
+      "character_brief": "Industrial-scale optimism, compressed product cycles, and enough factory metaphors to make every data center request a hard hat.",
+      "presence": [
+        {"platform": "x", "status": "no-account-found", "url": null, "absence_quip": "No verified X account was found. The keynote stage appears to have sufficient bandwidth."},
+        {"platform": "linkedin", "status": "verified-active", "url": "https://www.linkedin.com/in/jenhsunhuang/", "absence_quip": null}
+      ],
+      "case_ids": []
+    },
+    {
+      "id": "elon-musk",
+      "name": "Elon Musk",
+      "company": "xAI",
+      "portrait_url": null,
+      "character_brief": "Short timelines, maximal stakes, and predictions delivered at the speed normally reserved for product renaming.",
+      "presence": [
+        {"platform": "x", "status": "verified-active", "url": "https://x.com/elonmusk", "absence_quip": null},
+        {"platform": "linkedin", "status": "no-account-found", "url": null, "absence_quip": "No verified LinkedIn account entered the record. One professional network may already be enough."}
+      ],
+      "case_ids": []
+    }
+  ],
+  "cases": [
+    {
+      "id": "local-model-majority",
+      "person_id": "clement-delangue",
+      "title": "The Majority Report",
+      "category": "Small models / deployment",
+      "evidence": {
+        "content_id": "linkedin:7469805686659641344",
+        "platform": "linkedin",
+        "canonical_url": "https://www.linkedin.com/feed/update/urn:li:activity:7469805686659641344/",
+        "published_at": "2026-06-08T17:40:57.978+00:00",
+        "exact_text": "Narrative violation: according to Stanford University research, local models can answer 71.3% of real-world chat and reasoning queries accurately, up from 23.2% in 2023. Obviously at a fraction of the cost and energy consumption of frontier APIs.\n\nThe obvious conclusion: you don't need a frontier model for most tasks. The future is multi-model: local, open-source, smaller and cheaper for the majority of workloads, frontier APIs when no other choices!\n\u2026more",
+        "excerpt": "The obvious conclusion: you don't need a frontier model for most tasks. The future is multi-model: local, open-source, smaller and cheaper for the majority of workloads, frontier APIs when no other choices!"
+      },
+      "charge": "One benchmark result is being asked to carry the phrase 'most tasks' without a definition of the workload distribution.",
+      "fair_defense": "The post explicitly reserves frontier APIs for tasks where smaller local models are insufficient and argues for a mixed deployment strategy.",
+      "rationale": "The claim is concrete enough to examine rhetorically, but the court cannot infer universal task coverage from the cited benchmark alone.",
+      "verdict": "jury-still-out",
+      "review_status": "human-reviewed",
+      "roastability": 91,
+      "confidence": 88,
+      "court_direction": "benchmark-cross-examination",
+      "featured": true
+    }
+  ]
+}

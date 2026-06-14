@@ -1,154 +1,126 @@
-"""Deployable Gradio shell for AI Prophecy Court."""
+"""AI Prophecy Court custom frontend and Gradio API server."""
 
 from __future__ import annotations
 
-import gradio as gr
+import json
+import os
+from pathlib import Path
 
-LEADERS = [
-    ("Sam Altman", "OpenAI", "X"),
-    ("Dario Amodei", "Anthropic", "X"),
-    ("Sundar Pichai", "Google", "X + LinkedIn"),
-    ("Satya Nadella", "Microsoft", "X + LinkedIn"),
-    ("Clement Delangue", "Hugging Face", "X + LinkedIn"),
-    ("Jensen Huang", "NVIDIA", "LinkedIn"),
-    ("Elon Musk", "xAI", "X"),
-]
+from fastapi import HTTPException
+from fastapi.responses import FileResponse, JSONResponse
+from fastapi.staticfiles import StaticFiles
+from gradio import Server
+
+from backend.repository import DocketRepository
+from backend.runtime import ModalRuntime
+from backend.service import CourtService
+
+ROOT = Path(__file__).resolve().parent
+FRONTEND_DIST = ROOT / "frontend" / "dist"
+ASSETS_DIR = FRONTEND_DIST / "assets"
+
+repository = DocketRepository.from_json(ROOT / "data" / "docket.json")
+court = CourtService(repository, runtime=ModalRuntime.from_environment())
+app = Server()
 
 
-def leader_cards() -> str:
-    cards = "".join(
-        f"""
-        <article class="leader-card">
-          <span class="source">{source}</span>
-          <h3>{name}</h3>
-          <p>{company}</p>
-          <div class="status"><i></i> Evidence indexed</div>
-        </article>
-        """
-        for name, company, source in LEADERS
+@app.get("/api/bootstrap")
+def bootstrap() -> JSONResponse:
+    return JSONResponse(court.bootstrap().model_dump(mode="json"))
+
+
+@app.get("/api/leaders/{person_id}")
+def leader_detail(person_id: str) -> JSONResponse:
+    leader = court.leader_detail(person_id)
+    if leader is None:
+        raise HTTPException(status_code=404, detail="Leader not found")
+    return JSONResponse(leader.model_dump(mode="json"))
+
+
+@app.get("/api/cases/{case_id}")
+def case_detail(case_id: str) -> JSONResponse:
+    case = repository.get_case(case_id)
+    if case is None:
+        raise HTTPException(status_code=404, detail="Case not found")
+    return JSONResponse(case.model_dump(mode="json"))
+
+
+@app.api(name="convene_trial")
+def convene_trial(case_id: str, style: str, session_id: str = "") -> str:
+    """Return a validated trial payload for Gradio's queued client."""
+    payload = court.convene(case_id=case_id, style=style, session_id=session_id)
+    return payload.model_dump_json()
+
+
+@app.api(name="record_vote")
+def record_vote(
+    case_id: str,
+    style: str,
+    choice: str,
+    session_id: str = "",
+) -> str:
+    """Record an anonymous local vote and reveal the competing models."""
+    reveal = court.record_vote(
+        case_id=case_id,
+        style=style,
+        choice=choice,
+        session_id=session_id,
     )
-    return f'<section class="leader-grid">{cards}</section>'
+    return reveal.model_dump_json()
 
 
-CSS = """
-:root {
-  --ink: #26231d;
-  --paper: #f3ead0;
-  --paper-light: #fffaf0;
-  --acid: #a8db49;
-  --gold: #ad8b45;
-  --muted: #6f695c;
-}
-.gradio-container {
-  max-width: none !important;
-  color: var(--ink) !important;
-  background:
-    radial-gradient(circle at 10% 0%, rgb(173 139 69 / 12%), transparent 32rem),
-    repeating-linear-gradient(92deg, transparent 0 42px, rgb(38 35 29 / 2%) 43px),
-    var(--paper) !important;
-}
-.main { max-width: 1480px; margin: 0 auto; padding: 24px 28px 64px; }
-.hero {
-  border: 2px solid var(--ink);
-  background: var(--paper-light);
-  padding: clamp(28px, 5vw, 72px);
-  box-shadow: 10px 10px 0 var(--ink);
-}
-.eyebrow, .source, .status {
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  text-transform: uppercase;
-  letter-spacing: .12em;
-  font-size: 11px;
-}
-.hero h1 {
-  margin: 12px 0 14px;
-  max-width: 900px;
-  font-family: Georgia, serif;
-  font-size: clamp(52px, 9vw, 126px);
-  line-height: .82;
-  letter-spacing: -.065em;
-}
-.hero-copy { max-width: 720px; color: var(--muted); font-size: 18px; }
-.badge {
-  display: inline-block;
-  margin-top: 24px;
-  padding: 8px 12px;
-  border: 1px solid var(--ink);
-  background: var(--acid);
-  font-weight: 700;
-}
-.section-title {
-  margin: 54px 0 18px;
-  padding-bottom: 12px;
-  border-bottom: 2px solid var(--ink);
-  font-family: Georgia, serif;
-  font-size: 34px;
-}
-.leader-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-  gap: 14px;
-}
-.leader-card {
-  min-height: 180px;
-  padding: 20px;
-  border: 1px solid var(--ink);
-  background: rgb(255 250 240 / 72%);
-}
-.leader-card h3 { margin: 34px 0 2px; font-family: Georgia, serif; font-size: 25px; }
-.leader-card p { margin: 0; color: var(--muted); }
-.source { float: right; padding: 5px 7px; border: 1px solid var(--gold); }
-.status { margin-top: 24px; }
-.status i {
-  display: inline-block;
-  width: 8px;
-  height: 8px;
-  margin-right: 7px;
-  border-radius: 50%;
-  background: var(--acid);
-  box-shadow: 0 0 0 2px var(--ink);
-}
-.notice {
-  margin-top: 18px;
-  padding: 16px 18px;
-  border-left: 6px solid var(--gold);
-  background: rgb(255 250 240 / 70%);
-}
-footer { margin-top: 40px; color: var(--muted); font-size: 13px; }
-"""
+@app.api(name="synthesize_verdict")
+def synthesize_verdict(case_id: str, style: str, winner: str, text: str) -> str:
+    """Return a VoxCPM2 asset when the optional Modal runtime is configured."""
+    return court.voice_asset(
+        case_id=case_id,
+        style=style,
+        winner=winner,
+        text=text,
+    ).model_dump_json()
 
 
-with gr.Blocks(title="AI Prophecy Court") as demo:
-    with gr.Column(elem_classes="main"):
-        gr.HTML(
-            """
-            <header class="hero">
-              <div class="eyebrow">Chapter Two · An Adventure in Thousand Token Wood</div>
-              <h1>AI Prophecy Court</h1>
-              <p class="hero-copy">
-                Public predictions enter as evidence. An AI judge checks the
-                record, finds the gap between confidence and reality, and
-                delivers a cited roast.
-              </p>
-              <span class="badge">COURT IN PREPARATION</span>
-            </header>
-            <h2 class="section-title">The defendants</h2>
-            """
-        )
-        gr.HTML(leader_cards())
-        gr.HTML(
-            """
-            <aside class="notice">
-              <strong>Current build:</strong> deployable interface shell with
-              the verified X and LinkedIn roster. Retrieval, evidence matching,
-              and AI-generated verdicts arrive in the next backend milestone.
-            </aside>
-            <footer>
-              Built with Codex · Source-linked evidence · No synthetic quotes
-            </footer>
-            """
-        )
+if ASSETS_DIR.exists():
+    app.mount("/assets", StaticFiles(directory=ASSETS_DIR), name="frontend-assets")
+
+
+def frontend_response() -> FileResponse | JSONResponse:
+    index = FRONTEND_DIST / "index.html"
+    if index.exists():
+        return FileResponse(index)
+
+    return JSONResponse(
+        {
+            "status": "frontend_not_built",
+            "message": "Run npm install && npm run build in space/frontend.",
+            "api": {
+                "bootstrap": "/api/bootstrap",
+                "gradio": ["/convene_trial", "/record_vote", "/synthesize_verdict"],
+            },
+        },
+        status_code=503,
+    )
+
+
+@app.get("/", response_model=None)
+def homepage() -> FileResponse | JSONResponse:
+    return frontend_response()
+
+
+@app.get("/archive", response_model=None)
+def archive_page() -> FileResponse | JSONResponse:
+    return frontend_response()
+
+
+@app.get("/people/{person_id}", response_model=None)
+def dossier_page(person_id: str) -> FileResponse | JSONResponse:
+    del person_id
+    return frontend_response()
 
 
 if __name__ == "__main__":
-    demo.launch(css=CSS)
+    app.launch(
+        server_name=os.getenv("GRADIO_SERVER_NAME", "0.0.0.0"),
+        server_port=int(os.getenv("GRADIO_SERVER_PORT", "7860")),
+        show_error=True,
+    )
