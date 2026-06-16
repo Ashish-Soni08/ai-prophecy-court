@@ -15,6 +15,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 
 import { CourtRenderer } from "../components/court-renderer";
+import { LeaderPortrait } from "../components/leader-portrait";
 import { Button } from "../components/ui/button";
 import { buildBattleSpec, buildEvidenceSpec } from "../court/spec";
 import {
@@ -306,12 +307,7 @@ export function HomePage() {
         <div className="leader-grid">
           {leaders.map((item, index) => (
             <Link className="leader-card" to={`/people/${item.id}`} key={item.id}>
-              <div className="portrait-placeholder" aria-hidden="true">
-                {item.name
-                  .split(" ")
-                  .map((part) => part[0])
-                  .join("")}
-              </div>
+              <LeaderPortrait leader={item} decorative />
               <div className="leader-index">{String(index + 1).padStart(2, "0")}</div>
               <h3>{item.name}</h3>
               <p>{item.company}</p>

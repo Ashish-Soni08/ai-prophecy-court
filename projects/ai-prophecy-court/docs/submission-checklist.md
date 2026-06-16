@@ -28,7 +28,7 @@ Status as of June 16, 2026.
 - [x] Homepage, archive, and seven dossier routes exist.
 - [x] Mobile and desktop layouts are implemented.
 - [x] Loading, error, deliberation, vote, and reveal states exist.
-- [ ] Replace initial placeholders with reviewed leader portraits.
+- [x] Replace initial placeholders with reviewed leader portrait/sigil cards.
 - [x] Generate and test a downloadable shareable verdict card.
 - [x] Add and verify a repeatable local demo-video recorder.
 - [x] Run local keyboard navigation and automated WCAG A/AA checks.

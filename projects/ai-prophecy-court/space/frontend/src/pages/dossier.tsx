@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { ArrowLeft, ExternalLink, FileText, Radio } from "lucide-react";
 import { Link, useParams } from "react-router-dom";
 
+import { LeaderPortrait } from "../components/leader-portrait";
 import { getLeader } from "../lib/api";
 
 export function DossierPage() {
@@ -25,12 +26,7 @@ export function DossierPage() {
         <ArrowLeft aria-hidden="true" size={16} /> Return to live floor
       </Link>
       <div className="dossier-hero">
-        <div className="dossier-portrait">
-          {leader.name
-            .split(" ")
-            .map((part) => part[0])
-            .join("")}
-        </div>
+        <LeaderPortrait leader={leader} variant="hero" />
         <div>
           <div className="eyebrow">Individual dossier / AI character brief</div>
           <h1>{leader.name}</h1>

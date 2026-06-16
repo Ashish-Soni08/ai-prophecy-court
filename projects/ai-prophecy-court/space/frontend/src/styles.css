@@ -138,8 +138,63 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .leader-grid { display: grid; grid-template-columns: repeat(7, minmax(145px, 1fr)); gap: 10px; padding-top: 18px; overflow-x: auto; }
 .leader-card { min-height: 310px; padding: 16px; border: 1px solid var(--ink); background: rgb(255 250 240 / 68%); text-decoration: none; display: flex; flex-direction: column; transition: transform 160ms, box-shadow 160ms; }
 .leader-card:hover { transform: translateY(-4px); box-shadow: 5px 5px 0 var(--ink); }
-.portrait-placeholder, .dossier-portrait { display: grid; place-items: center; border: 1px solid var(--gold); background: repeating-linear-gradient(135deg, transparent 0 8px, rgb(173 139 69 / 12%) 9px); font: 500 2.4rem Georgia, serif; }
-.portrait-placeholder { aspect-ratio: 4/5; }
+.court-portrait {
+  position: relative;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 4/5;
+  border: 1px solid var(--gold);
+  background: var(--portrait-wash, var(--paper-light));
+  color: var(--portrait-ink, var(--ink));
+  overflow: hidden;
+  isolation: isolate;
+}
+img.court-portrait { object-fit: cover; }
+.court-portrait svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.court-portrait-wash { fill: color-mix(in srgb, var(--portrait-wash) 76%, var(--paper-light)); }
+.court-portrait-rays {
+  fill: none;
+  stroke: color-mix(in srgb, var(--portrait-accent) 60%, transparent);
+  stroke-width: 18;
+  stroke-linecap: round;
+}
+.court-portrait-orbit {
+  fill: color-mix(in srgb, var(--paper-light) 48%, transparent);
+  stroke: var(--portrait-ink);
+  stroke-width: 2;
+  stroke-dasharray: 6 9;
+}
+.court-portrait-bust {
+  fill: color-mix(in srgb, var(--portrait-accent) 72%, var(--ink));
+  stroke: var(--portrait-ink);
+  stroke-width: 2;
+}
+.court-portrait-gavel {
+  fill: color-mix(in srgb, var(--portrait-ink) 82%, var(--portrait-accent));
+  opacity: .28;
+}
+.court-portrait-initials {
+  z-index: 1;
+  translate: 0 -4%;
+  font: 500 clamp(2.3rem, 6vw, 4.4rem)/1 Georgia, serif;
+  letter-spacing: -.08em;
+  text-shadow: 2px 2px 0 color-mix(in srgb, var(--paper-light) 70%, transparent);
+}
+.court-portrait-label {
+  position: absolute;
+  z-index: 1;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+  padding-top: 8px;
+  border-top: 1px solid color-mix(in srgb, var(--portrait-ink) 36%, transparent);
+  font: 800 .58rem ui-monospace, monospace;
+  letter-spacing: .08em;
+  text-align: center;
+  text-transform: uppercase;
+  overflow-wrap: anywhere;
+}
+.court-portrait-card { font-size: 2.4rem; }
 .leader-index { margin-top: 14px; font: 700 .7rem ui-monospace, monospace; }
 .leader-card h3 { margin: auto 0 0; font: 700 1.25rem Georgia, serif; }
 .leader-card p { margin: 3px 0 16px; color: var(--muted); }
@@ -150,7 +205,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .dossier-page, .archive-page { padding-block: 42px 90px; }
 .back-link { display: inline-flex; align-items: center; gap: 6px; font-weight: 750; }
 .dossier-hero { display: grid; grid-template-columns: 270px 1fr; gap: 48px; align-items: end; padding-block: 44px; border-bottom: 3px double var(--ink); }
-.dossier-portrait { aspect-ratio: 4/5; font-size: 4rem; }
+.court-portrait-hero { font-size: 4rem; box-shadow: 10px 10px 0 var(--ink); }
 .dossier-hero h1, .archive-page h1 { margin: 10px 0 0; font: 500 clamp(3.4rem, 7vw, 7rem)/.9 Georgia, serif; letter-spacing: -.05em; }
 .dossier-hero h2 { margin: 7px 0 24px; color: var(--gold); font: 600 1.5rem Georgia, serif; }
 .dossier-hero p { max-width: 760px; color: var(--muted); font-size: 1.15rem; }
