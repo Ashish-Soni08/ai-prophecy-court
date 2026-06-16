@@ -43,10 +43,6 @@ jobs:
           npm run test
           npm run build
 
-      - name: Install Chromium
-        working-directory: projects/ai-prophecy-court/space/frontend
-        run: npx playwright install chromium
-
       - name: Test browser flow and accessibility
         working-directory: projects/ai-prophecy-court/space/frontend
         run: npm run test:e2e
