@@ -43,6 +43,10 @@ jobs:
           npm run test
           npm run build
 
+      - name: Audit submission readiness
+        working-directory: projects/ai-prophecy-court
+        run: uv run python scripts/audit_submission.py
+
       - name: Test browser flow and accessibility
         working-directory: projects/ai-prophecy-court/space/frontend
         run: npm run test:e2e
