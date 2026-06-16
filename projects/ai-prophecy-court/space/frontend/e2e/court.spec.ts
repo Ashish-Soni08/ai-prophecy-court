@@ -49,12 +49,15 @@ test("has no serious accessibility violations on primary routes", async ({ page 
 test("supports keyboard navigation to the primary action", async ({ page }) => {
   await page.goto("/");
 
-  await page.keyboard.press("Tab");
-  for (let attempt = 0; attempt < 12; attempt += 1) {
-    const label = await page.evaluate(() => document.activeElement?.textContent?.trim());
-    if (label === "Convene Court") break;
+  const primaryAction = page.getByRole("button", { name: "Convene Court" });
+  for (let attempt = 0; attempt < 30; attempt += 1) {
+    if (await primaryAction.evaluate((element) => element === document.activeElement)) {
+      break;
+    }
     await page.keyboard.press("Tab");
   }
 
-  await expect(page.getByRole("button", { name: "Convene Court" })).toBeFocused();
+  await expect(primaryAction).toBeFocused();
+  await page.keyboard.press("Enter");
+  await expect(page.getByText("Evidence admitted")).toBeVisible();
 });
