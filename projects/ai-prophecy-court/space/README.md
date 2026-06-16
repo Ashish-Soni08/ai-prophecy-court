@@ -8,7 +8,7 @@ app_file: app.py
 python_version: "3.11"
 pinned: false
 license: mit
-short_description: Put public AI predictions on trial in a two-model roast battle.
+short_description: Public AI predictions face a two-model roast trial.
 tags:
   - gradio
   - custom-ui
