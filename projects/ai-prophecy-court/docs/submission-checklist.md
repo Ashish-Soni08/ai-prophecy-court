@@ -9,7 +9,7 @@ Status as of June 14, 2026.
 - [x] Custom React/TypeScript frontend builds into the Space.
 - [x] Chapter Two and custom-UI tags are present in the Space README.
 - [x] Idea, technology, models, data provenance, and guardrails are documented.
-- [ ] Deploy the latest `main` commit to the public Hugging Face Space.
+- [ ] Merge the open Hugging Face Space deployment PR into the public Space.
 - [ ] Record and link the final demo video.
 - [ ] Publish and link one social-media showcase post.
 

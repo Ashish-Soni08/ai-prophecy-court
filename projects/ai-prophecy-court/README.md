@@ -85,6 +85,7 @@ See:
 - `docs/product-spec.md` for the experience contract
 - `docs/partners/README.md` for partner choices
 - `docs/submission-checklist.md` for hackathon readiness
+- `docs/deployment-status.md` for the current GitHub and Hugging Face deploy state
 - `runtime/README.md` for Modal deployment
 - `runtime/model-manifest.yaml` for the parameter-cap audit
 
