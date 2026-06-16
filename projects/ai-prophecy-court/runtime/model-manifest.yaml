@@ -1,0 +1,52 @@
+schema_version: 1
+parameter_cap: "<32B"
+
+models:
+  - id: nvidia/NVIDIA-Nemotron-3-Nano-4B-BF16
+    parameters: 4B
+    role: roast-battle-a
+    runtime: modal-l4
+    status: selected
+
+  - id: openbmb/MiniCPM4.1-8B
+    parameters: 8B
+    role:
+      - offline-claim-analysis
+      - roast-battle-b
+    runtime: modal-l4
+    status: selected
+
+  - id: openbmb/MiniCPM5-1B
+    parameters: 1B
+    role:
+      - claim-screening
+      - court-direction
+      - safety-screening
+    runtime: modal-l4
+    status: selected
+
+  - id: openbmb/VoxCPM2
+    parameters: 2B
+    role: verdict-voice
+    runtime: modal-l4
+    status: adapter-reserved
+
+  - id: black-forest-labs/FLUX.2-klein-4B
+    parameters: 4B
+    role:
+      - leader-portraits
+      - featured-card-art
+    runtime: modal-offline
+    status: selected
+
+  - id: BAAI/bge-small-en-v1.5
+    parameters: 33.4M
+    role:
+      - deduplication
+      - related-claim-similarity
+    runtime: modal-batch
+    status: selected
+
+excluded:
+  - family: Nemotron-3-Nano-30B
+    reason: Hub parameter metadata is ambiguous around the strict 32B boundary.

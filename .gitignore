@@ -1,7 +1,12 @@
 .venv/
+node_modules/
 .pytest_cache/
 __pycache__/
 *.pyc
+*.tsbuildinfo
+playwright-report/
+test-results/
+demo-output/
 
 .env
 raw/
@@ -60,3 +65,4 @@ skills/
 /projects/ai-prophecy-court/hf-release/*/data/
 /projects/ai-prophecy-court/hf-release/*/schemas/
 /projects/ai-prophecy-court/hf-release/*/pipeline-release.json
+/projects/ai-prophecy-court/derived/

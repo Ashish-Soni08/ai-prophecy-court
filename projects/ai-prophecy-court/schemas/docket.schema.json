@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://huggingface.co/datasets/build-small-hackathon/ai-prophecy-court-docket/docket.schema.json",
+  "title": "AI Prophecy Court Docket",
+  "type": "object",
+  "required": ["leaders", "cases"],
+  "properties": {
+    "leaders": {
+      "type": "array",
+      "items": {"type": "object", "required": ["id", "name", "company", "presence", "case_ids"]}
+    },
+    "cases": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "person_id",
+          "evidence",
+          "charge",
+          "fair_defense",
+          "verdict",
+          "review_status",
+          "roastability",
+          "confidence"
+        ]
+      }
+    }
+  },
+  "additionalProperties": false
+}

@@ -23,6 +23,28 @@ jobs:
         with:
           fetch-depth: 0
 
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: projects/ai-prophecy-court/space/frontend/package-lock.json
+
+      - name: Build custom frontend
+        working-directory: projects/ai-prophecy-court/space/frontend
+        run: |
+          npm ci
+          npm run test
+          npm run build
+
+      - name: Attach generated Space assets
+        run: |
+          git config user.name "AI Prophecy Court CI"
+          git config user.email "noreply@openai.com"
+          git add -f projects/ai-prophecy-court/space/frontend/dist
+          git commit -m "build: bundle AI Prophecy Court frontend
+
+          Co-authored-by: Codex <noreply@openai.com>"
+
       - name: Create Space subtree
         run: git subtree split --prefix=projects/ai-prophecy-court/space --branch hf-space-sync
 

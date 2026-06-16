@@ -8,13 +8,64 @@ app_file: app.py
 python_version: "3.11"
 pinned: false
 license: mit
+short_description: Public AI predictions face a two-model roast trial.
+tags:
+  - gradio
+  - custom-ui
+  - build-small-hackathon
+  - thousand-token-wood
+models:
+  - nvidia/NVIDIA-Nemotron-3-Nano-4B-BF16
+  - openbmb/MiniCPM4.1-8B
+  - openbmb/VoxCPM2
+datasets:
+  - build-small-hackathon/ai-prophecy-court-presence
 ---
 
 # AI Prophecy Court
 
-A playful court for examining the public AI predictions of major technology
-leaders. This first Space establishes the deployable Gradio shell; the
-evidence retrieval and AI roasting backend will be added in later commits.
+AI leaders made the predictions. Two small models write the closing arguments.
+You are the jury.
 
-Source repository:
-[Ashish-Soni08/ai-prophecy-court](https://github.com/Ashish-Soni08/ai-prophecy-court)
+AI Prophecy Court turns preserved public posts into playful, source-linked
+court cases. Pick a roast division, give two models the same evidence packet,
+vote for the sharper argument, and reveal which model wrote each roast.
+The jury can then export a source-stamped verdict card and copy a social
+caption without sending the image to another service.
+
+## Why AI Is Load-Bearing
+
+The central experience is a blind creative comparison between
+`NVIDIA-Nemotron-3-Nano-4B-BF16` and `MiniCPM4.1-8B`. The models do the fun
+thing: they interpret the rhetoric of a real claim and independently produce
+the competing punchlines. A reviewed curated battle keeps the app usable
+during cold starts or provider outages.
+
+## Product Guardrails
+
+- Every quoted statement links to its preserved source.
+- The court roasts public claims, not identity, appearance, family, or private
+  life.
+- Verdicts evaluate rhetoric inside the collected dataset; they are not
+  external fact checks.
+- Model identities stay hidden until the visitor votes.
+- Verdict cards are rendered locally and preserve the source content ID.
+- No model used by the project exceeds 32B parameters.
+
+## Stack
+
+- Gradio `Server` for the Space backend and typed callable API
+- React, TypeScript, Vite, and shadcn-style primitives for the custom frontend
+- `json-render` for schema-driven courtroom scenes
+- Modal gateway for optional live model calls and aggregate vote storage
+- Hugging Face dataset provenance with deterministic docket candidate building
+
+The Space remains functional without external secrets. Live roast generation
+activates when `MODAL_RUNTIME_URL` and `MODAL_RUNTIME_TOKEN` are configured.
+
+## Links
+
+- [Source repository](https://github.com/Ashish-Soni08/ai-prophecy-court)
+- [Presence dataset](https://huggingface.co/datasets/build-small-hackathon/ai-prophecy-court-presence)
+
+Demo video and social showcase links will be added before final submission.
