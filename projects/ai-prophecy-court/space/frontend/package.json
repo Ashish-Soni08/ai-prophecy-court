@@ -11,6 +11,7 @@
     "build": "tsc --noEmit -p tsconfig.app.json && vite build",
     "test": "vitest run src",
     "test:e2e": "playwright test",
+    "record:demo": "node scripts/record-demo.mjs",
     "preview": "vite preview"
   },
   "dependencies": {

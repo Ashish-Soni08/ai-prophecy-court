@@ -86,6 +86,8 @@ See:
 - `docs/partners/README.md` for partner choices
 - `docs/submission-checklist.md` for hackathon readiness
 - `docs/deployment-status.md` for the current GitHub and Hugging Face deploy state
+- `docs/demo-script.md` for the repeatable demo-video recording flow
+- `docs/social-post-drafts.md` for ready-to-fill social copy
 - `runtime/README.md` for Modal deployment
 - `runtime/model-manifest.yaml` for the parameter-cap audit
 
