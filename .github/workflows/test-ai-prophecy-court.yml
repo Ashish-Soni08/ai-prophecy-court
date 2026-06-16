@@ -45,7 +45,7 @@ jobs:
 
       - name: Install Chromium
         working-directory: projects/ai-prophecy-court/space/frontend
-        run: npx playwright install --with-deps chromium
+        run: npx playwright install chromium
 
       - name: Test browser flow and accessibility
         working-directory: projects/ai-prophecy-court/space/frontend
