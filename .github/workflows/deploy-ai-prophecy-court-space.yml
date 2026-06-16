@@ -52,7 +52,11 @@ jobs:
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
-          test -n "$HF_TOKEN"
+          if [ -z "$HF_TOKEN" ]; then
+            echo "::notice::HF_TOKEN is not configured; skipping Hugging Face Space push."
+            exit 0
+          fi
+
           git push --force \
             "https://oauth2:${HF_TOKEN}@huggingface.co/spaces/build-small-hackathon/ai-prophecy-court" \
             hf-space-sync:main
