@@ -4,12 +4,13 @@ Last checked: June 16, 2026.
 
 ## GitHub
 
-- Draft PR: https://github.com/Ashish-Soni08/ai-prophecy-court/pull/1
-- Head commit: `0315f9cceacb8a63f1b0cd3772f747e850c11520`
+- PR: https://github.com/Ashish-Soni08/ai-prophecy-court/pull/1
+- Head commit: see the current PR head on GitHub.
 - CI: passing
 - Coverage: Python tests, frontend unit tests, Vite production build,
-  Playwright trial flow, verdict-card generation, keyboard navigation, axe
-  serious accessibility scan, and local demo-video recording.
+  submission-readiness audit, Playwright trial flow, verdict-card generation,
+  keyboard navigation, axe serious accessibility scan, and local demo-video
+  recording.
 
 ## Hugging Face Space
 
