@@ -21,12 +21,14 @@ Last checked: June 16, 2026.
   `build-small-hackathon` Space.
 - Latest uploaded Space commit: `238d88ab8ebad0e8010fb10ceb4198eeb2ef2b93`
 
-The local CLI authenticated as `ashish-soni08`, confirmed membership in
-`build-small-hackathon`. The `hf` executable currently points at a stale
-uv-managed Python path, so the latest upload used `huggingface_hub.HfApi`
-through the project uv environment. Direct commit and merge attempts returned
-`403 Forbidden` because the token has read access but lacks the required write
-permission for the org Space.
+The GitHub deploy workflow builds and bundles the Space subtree. If repository
+secret `HF_TOKEN` is not configured, the workflow reports a notice and skips the
+Hugging Face push instead of failing the build. The local CLI authenticated as
+`ashish-soni08`, confirmed membership in `build-small-hackathon`. The `hf`
+executable currently points at a stale uv-managed Python path, so the latest
+upload used `huggingface_hub.HfApi` through the project uv environment. Direct
+commit and merge attempts returned `403 Forbidden` because the token has read
+access but lacks the required write permission for the org Space.
 
 ## Next Action
 
