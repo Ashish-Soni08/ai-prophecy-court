@@ -33,7 +33,7 @@ jobs:
       - name: Test Python
         working-directory: projects/ai-prophecy-court
         run: |
-          uv sync --locked --extra dev --extra space
+          uv sync --locked --extra dev --extra space --extra runtime
           uv run pytest -q
 
       - name: Test and build frontend
