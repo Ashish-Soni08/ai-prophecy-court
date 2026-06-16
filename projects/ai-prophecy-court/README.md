@@ -47,6 +47,18 @@ npm --prefix space/frontend run build
 npm --prefix space/frontend run test:e2e
 ```
 
+## Submission Audit
+
+Run the local readiness audit before uploading or submitting:
+
+```powershell
+uv run python scripts/audit_submission.py
+```
+
+The default audit fails only on build-readiness problems and reports launch
+blockers, such as missing public demo/social links or an unmerged Space PR, as
+warnings. Use `--strict-launch` when you want those warnings to fail the run.
+
 ## Build The Docket Queue
 
 The reproducible heuristic pass keeps model processing bounded and auditable:
